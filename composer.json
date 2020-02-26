@@ -1,0 +1,43 @@
+{
+    "name": "twentyfourhoursmedia/views-work",
+    "description": "plugin for handling pageviews",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "views work"
+    ],
+    "support": {
+        "docs": "https://github.com/twentyfourhoursmedia/views-work/blob/master/README.md",
+        "issues": "https://github.com/twentyfourhoursmedia/views-work/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "24hoursmedia",
+            "homepage": "https://www.24hoursmedia.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "twentyfourhoursmedia\\viewswork\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Views Work",
+        "handle": "views-work",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/twentyfourhoursmedia/views-work/master/CHANGELOG.md",
+        "components": {
+            "viewsWorkService": "twentyfourhoursmedia\\viewswork\\services\\ViewsWorkService"
+        },
+        "class": "twentyfourhoursmedia\\viewswork\\ViewsWork"
+    }
+}

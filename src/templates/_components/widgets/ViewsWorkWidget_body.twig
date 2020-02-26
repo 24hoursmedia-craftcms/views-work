@@ -1,0 +1,75 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Views Work plugin for Craft CMS
+ *
+ * ViewsWorkWidget Widget Body
+ *
+ * @author    24hoursmedia
+ * @copyright Copyright (c) 2018 24hoursmedia
+ * @link      http://www.24hoursmedia.com
+ * @package   ViewsWork
+ * @since     1.0.0
+ */
+#}
+
+{% import _self as macros %}
+{% macro show(entries) %}
+
+    {% if entries | length == 0 %}
+        <p>No items.</p>
+    {% else %}
+    <ul>
+        {% for item in entries %}
+            {% set views = craft.views_work.recording(item) %}
+            {# views \twentyfourhoursmedia\viewswork\models\ViewRecording #}
+            {% set url = item.cpEditUrl %}
+            <li>
+                {% if url is empty %}
+                    {{ item.title }}
+                {% else %}
+                    <a href="{{ url }}">{{ item.title }}</a>
+                    <span class="light">
+                            {{ item.dateCreated|timestamp('short') }}
+                        {%- if item.author %}, {{ item.author.username }}{% endif -%}
+                        </span>
+                {% endif %}
+                <br/>
+                <small style="font-size: 11px;">total: {{ views.total }} month:{{ views.thisMonth }} week:{{ views.thisWeek }} day:{{ views.today }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endmacro %}
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@twentyfourhoursmedia/viewswork/assetbundles/viewsworkwidgetwidget/dist', true) ~ '/img/ViewsWorkWidget-icon.svg' %}
+
+{#
+<img src="{{ iconUrl }}" height="64" width="64" />
+#}
+
+{% if section %}
+    <p>Showing items for section `{{ section.name }}`</p>
+{% endif %}
+{% if showTotal %}
+<h3>Top {{ count }} all time</h3>
+{{ macros.show(total) }}
+{% endif %}
+
+{% if showMonthly %}
+<h3>Top {{ count }} this month</h3>
+{{ macros.show(monthly) }}
+{% endif %}
+
+{% if showWeekly %}
+<h3>Top {{ count }} this week</h3>
+{{ macros.show(weekly) }}
+{% endif %}
+
+{% if showDaily %}
+<h3>Top {{ count }} today</h3>
+{{ macros.show(today) }}
+{% endif %}
+
+
+
+

@@ -1,0 +1,51 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Views Work plugin for Craft CMS 3.x
+ *
+ * Views Work Settings.twig
+ *
+ * @author    24hoursmedia
+ * @copyright Copyright (c) 2018 24hoursmedia
+ * @link      http://www.24hoursmedia.com
+ * @package   ViewsWork
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
+
+{{ forms.textField({
+    label: 'Signing key',
+    instructions: 'Enter a secret key here. It is used to digitally sign tracking urls so people cannot tamper with it. By default a cryptographically secure key is generated.',
+    id: 'signKey',
+    name: 'signKey',
+    value: settings['signKey']})
+}}
+
+
+<hr/>
+
+<h3>Cron job</h3>
+
+<p>
+    In order to reset the daily, monthly and weekly views, you need to set up a cron job.
+    It should run every night, for example at 00:05.
+</p>
+
+The command to execute:
+
+<br/><br/>
+<code>
+php /path_to_project/craft views-work/default/reset-views
+</code>
+<br/><br/>
+
+Example of a line in crontab:
+<br/><br/>
+<code>
+5 0 * * * php /path_to_project/craft views-work/default/reset-views
+</code>
+<br/><br/>

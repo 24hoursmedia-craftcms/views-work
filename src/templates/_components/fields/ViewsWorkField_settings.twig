@@ -1,0 +1,27 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * ViewsWork plugin for Craft CMS
+ *
+ * ViewsWorkField Field Settings
+ *
+ * @author    24hoursmedia
+ * @copyright Copyright (c) 2020 24hoursmedia
+ * @link      https://www.24hoursmedia.com
+ * @package   ViewsWork
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
+{#
+{{ forms.textField({
+    label: 'Some Attribute',
+    instructions: 'Enter some attribute here.',
+    id: 'someAttribute',
+    name: 'someAttribute',
+    value: field['someAttribute']})
+}}
+#}

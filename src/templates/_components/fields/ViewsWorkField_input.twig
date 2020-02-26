@@ -1,0 +1,48 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * ViewsWork plugin for Craft CMS 3.x
+ *
+ * ViewsWorkField Field Input
+ *
+ * @author    24hoursmedia
+ * @copyright Copyright (c) 2020 24hoursmedia
+ * @link      https://www.24hoursmedia.com
+ * @package   ViewsWork
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+
+{# value \twentyfourhoursmedia\viewswork\models\ViewRecording #}
+
+<table>
+    <tr>
+        <th>Total views:</th>
+        <td>{{ value.total }}</td>
+    </tr>
+    <tr>
+        <th>Views this month:</th>
+        <td>{{ value.thisMonth }}</td>
+    </tr>
+    <tr>
+        <th>Views this week:</th>
+        <td>{{ value.thisWeek }}</td>
+    </tr>
+    <tr>
+        <th>Views today:</th>
+        <td>{{ value.today }}</td>
+    </tr>
+</table>
+
+{#
+{{ forms.textField({
+        label: 'Some Field',
+        instructions: 'Enter some text here.',
+        id: name,
+        name: name,
+        value: value})
+}}
+#}
