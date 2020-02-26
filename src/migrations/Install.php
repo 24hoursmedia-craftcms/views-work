@@ -111,10 +111,10 @@ class Install extends Migration
                     // Custom columns in the table
                     'siteId' => $this->integer()->notNull(),
                     'elementId' => $this->integer()->notNull(),
-                    'viewsTotal' => $this->integer()->defaultValue(0),
-                    'viewsToday' => $this->integer()->defaultValue(0),
-                    'viewsThisWeek' => $this->integer()->defaultValue(0),
-                    'viewsThisMonth' => $this->integer()->defaultValue(0)
+                    'viewsTotal' => $this->integer()->notNull()->defaultValue(0),
+                    'viewsToday' => $this->integer()->notNull()->defaultValue(0),
+                    'viewsThisWeek' => $this->integer()->notNull()->defaultValue(0),
+                    'viewsThisMonth' => $this->integer()->notNull()->defaultValue(0)
                 ]
             );
         }
