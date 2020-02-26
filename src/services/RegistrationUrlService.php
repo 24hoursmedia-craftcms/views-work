@@ -30,7 +30,7 @@ class RegistrationUrlService extends Component
     const SIGNED_PARAMS_FIELD = '_signedVal';
 
     protected function getSigningKey() : string {
-        return ViewsWork::$plugin->settings->signKey;
+        return (string)ViewsWork::$plugin->settings->signKey;
     }
 
     public function createImageUrl(ElementInterface $entry, $opts = []): string

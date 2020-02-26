@@ -28,7 +28,7 @@ class Settings extends Model
     /**
      * @var string
      */
-    public $signKey = 'Enter a secret key';
+    public $signKey = '';
 
 
 
