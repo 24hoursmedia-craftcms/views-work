@@ -28,6 +28,7 @@ Get popular items:
 {% set entries = query.all
 
 # sort popular items by week, monthly or daily views
+{% do viewsWork.sortPopular(query, 'total') %}
 {% do viewsWork.sortPopular(query, 'week') %}
 {% do viewsWork.sortPopular(query, 'month') %}
 {% do viewsWork.sortPopular(query, 'day') %}
