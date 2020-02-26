@@ -113,6 +113,7 @@ class Install extends Migration
                     'elementId' => $this->integer()->notNull(),
                     'viewsTotal' => $this->integer()->defaultValue(0),
                     'viewsToday' => $this->integer()->defaultValue(0),
+                    'viewsThisWeek' => $this->integer()->defaultValue(0),
                     'viewsThisMonth' => $this->integer()->defaultValue(0)
                 ]
             );
@@ -126,7 +127,22 @@ class Install extends Migration
      */
     protected function createIndexes()
     {
-
+        $this->createIndex(
+            $this->db->getIndexName('{{%viewswork_viewrecording}}', ['viewsTotal'], false),
+            '{{%viewswork_viewrecording}}', ['viewsTotal'], false
+        );
+        $this->createIndex(
+            $this->db->getIndexName('{{%viewswork_viewrecording}}', ['viewsToday'], false),
+            '{{%viewswork_viewrecording}}', ['viewsToday'], false
+        );
+        $this->createIndex(
+            $this->db->getIndexName('{{%viewswork_viewrecording}}', ['viewsThisWeek'], false),
+            '{{%viewswork_viewrecording}}', ['viewsThisWeek'], false
+        );
+        $this->createIndex(
+            $this->db->getIndexName('{{%viewswork_viewrecording}}', ['viewsThisMonth'], false),
+            '{{%viewswork_viewrecording}}', ['viewsThisMonth'], false
+        );
     }
 
     /**
