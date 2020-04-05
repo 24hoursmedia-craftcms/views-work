@@ -52,3 +52,6 @@ The cron checks wether it is the first day of the week or month before resetting
 ----
 
 Brought to you by [24hoursmedia](https://www.24hoursmedia.com)
+
+Logo by https://www.iconfinder.com/ReactiveDoodlesApp
+
