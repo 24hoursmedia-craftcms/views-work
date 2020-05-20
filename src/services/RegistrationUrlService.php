@@ -28,6 +28,7 @@ class RegistrationUrlService extends Component
 
     const SIGNATURE_FIELD = 'signature';
     const SIGNED_PARAMS_FIELD = '_signedVal';
+    const CACHEBUSTER_FIELD = '_cb';
 
     protected function getSigningKey() : string {
         return (string)ViewsWork::$plugin->settings->signKey;
@@ -47,7 +48,8 @@ class RegistrationUrlService extends Component
 
         $query = [
             self::SIGNATURE_FIELD => sha1($this->getSigningKey() . $signedVal),
-            self::SIGNED_PARAMS_FIELD => $signedVal
+            self::SIGNED_PARAMS_FIELD => $signedVal,
+            self::CACHEBUSTER_FIELD => uniqid('cb')
         ];
         return UrlHelper::actionUrl('views-work/register-view/beacon-image', $query);
     }
