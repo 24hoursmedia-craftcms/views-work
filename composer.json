@@ -2,7 +2,7 @@
     "name": "twentyfourhoursmedia/views-work",
     "description": "plugin for handling pageviews",
     "type": "craft-plugin",
-    "version": "1.1.8",
+    "version": "1.1.10",
     "keywords": [
         "craft",
         "cms",
