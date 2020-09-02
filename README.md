@@ -25,19 +25,19 @@ Get popular items:
 ```
 {% set query = craft.entries.section('..').limit(5) %}
 {% do craft.views_work.sortPopular(query) %}
-{% set entries = query.all
+{% set entries = query.all %}
 
 # sort popular items by week, monthly or daily views
-{% do viewsWork.sortPopular(query, 'total') %}
-{% do viewsWork.sortPopular(query, 'week') %}
-{% do viewsWork.sortPopular(query, 'month') %}
-{% do viewsWork.sortPopular(query, 'day') %}
+{% do craft.views_work.sortPopular(query, 'total') %}
+{% do craft.views_work.sortPopular(query, 'week') %}
+{% do craft.views_work.sortPopular(query, 'month') %}
+{% do craft.views_work.sortPopular(query, 'day') %}
 
 # exclude items with 0 views
-{% do viewsWork.sortPopular(query, 'week', {min_views: 1}) %}
+{% do craft.views_work.sortPopular(query, 'week', {min_views: 1}) %}
 
 # only deliver items with more than 100 views
-{% do viewsWork.sortPopular(query, 'week', {min_views: 100}) %}
+{% do craft.views_work.sortPopular(query, 'week', {min_views: 100}) %}
 ```
 
 ### Cron job
