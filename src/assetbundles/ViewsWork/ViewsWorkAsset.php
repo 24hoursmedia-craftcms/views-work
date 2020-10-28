@@ -29,7 +29,7 @@ class ViewsWorkAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist";
+        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/ViewsWork/dist";
 
         $this->depends = [
             CpAsset::class,
