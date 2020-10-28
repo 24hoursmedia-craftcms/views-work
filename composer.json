@@ -2,7 +2,7 @@
     "name": "twentyfourhoursmedia/views-work",
     "description": "plugin for handling pageviews",
     "type": "craft-plugin",
-    "version": "1.1.14",
+    "version": "1.1.15",
     "keywords": [
         "craft",
         "cms",
@@ -34,7 +34,7 @@
         "handle": "views-work",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/twentyfourhoursmedia/views-work/master/CHANGELOG.md",
+        "changelogUrl": "https://github.com/24hoursmedia-craftcms/views-work/blob/master/CHANGELOG.md",
         "components": {
             "viewsWorkService": "twentyfourhoursmedia\\viewswork\\services\\ViewsWorkService"
         },
