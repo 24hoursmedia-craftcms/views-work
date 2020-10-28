@@ -4,19 +4,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-# 1.1.13 - 2020-10-28
+## 1.1.13 - 2020-10-28
+
 ### Fixed
 - Fix problems on case sensitive file systems (i.e. linux vs osx/win)
 
-# 1.1.12 - 2020-10-27
+## 1.1.12 - 2020-10-27
+
 ### Fixed
 - compatible with composer v2
 
 ## 1.1.8 - 2020-04-05
+
 ### Modified
 - Modified logo
 
 ## 1.1.7 - 2020-02-26
+
 ### Modified
 - secret signing keys are now automatically generated in settings if the field is left empty
 
