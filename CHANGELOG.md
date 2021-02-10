@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# 1.2.0 - 2021-02-10
+### Added
+- Daily/weekly/monthly view counters can be reset with a special url if you do not have access to cron jobs.
+
+### Modified
+- Secret keys are now generated at plugin install (instead of after saving settings).
+
 # 1.1.12 - 2020-10-27
 ### Fixes
 - compatible with composer v2
