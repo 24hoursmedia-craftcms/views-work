@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2018 24hoursmedia
  */
 
-namespace twentyfourhoursmedia\viewswork\assetbundles\ViewsWork;
+namespace twentyfourhoursmedia\viewswork\assetbundles\viewswork;
 
 use Craft;
 use craft\web\AssetBundle;

@@ -6,13 +6,8 @@
 namespace twentyfourhoursmedia\viewswork\controllers;
 
 use Craft;
-
-use craft\elements\Category;
-use craft\elements\Entry;
-
 use craft\web\Controller;
 use twentyfourhoursmedia\viewswork\ViewsWork;
-use yii\web\BadRequestHttpException;
 use yii\web\Response;
 
 class RegisterViewController extends Controller

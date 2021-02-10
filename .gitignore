@@ -3,6 +3,9 @@
 .env.sh
 .env
 
+
+/local
+
 # COMPOSER
 /vendor
 
