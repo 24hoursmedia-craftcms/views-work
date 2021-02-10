@@ -23,11 +23,12 @@ class ResetController extends Controller
 
     public function actionReset(): Response
     {
-
-        $this->requirePostRequest();
-
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
+        if (!$settings->allowUrlResetGET) {
+            $this->requirePostRequest();
+        }
+
         if (!filter_var($settings->allowUrlReset, FILTER_VALIDATE_BOOLEAN)) {
             throw new AccessDeniedException('Not enabled');
         };

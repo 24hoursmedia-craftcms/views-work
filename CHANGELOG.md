@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.6] - 2021-02-10
+### Added
+- Optionally allow GET requests to the reset url to allow easycron free service plan
+
 ## [1.2.5] - 2021-02-10
 ### Fixed
-- now uses action urls for reset instead of a named site route
+- Now uses action urls for reset instead of a named site route
 
 ## [1.2.4] - 2021-02-10
 ### Fixed

@@ -37,6 +37,12 @@ class Settings extends Model
     public $allowUrlReset = false;
 
     /**
+     * Allow url reset GET method
+     * @var bool
+     */
+    public $allowUrlResetGET = false;
+
+    /**
      * Secret to append to the url reset url
      * @var string
      */
@@ -54,6 +60,7 @@ class Settings extends Model
         return [
             ['signKey', 'string'],
             ['allowUrlReset', 'boolean'],
+            ['allowUrlResetGET', 'boolean'],
             ['urlResetSecret', 'string'],
         ];
     }
