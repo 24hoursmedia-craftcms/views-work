@@ -1,17 +1,17 @@
-# Views Work Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-# [1.2.2] - 2021-02-10
+## [1.2.3] - 2021-02-10
 ### Added
 - Daily/weekly/monthly view counters can be reset with a special url if you do not have access to cron jobs.
 
 ### Modified
 - Secret keys are now generated at plugin install (instead of after saving settings).
 
-# [1.1.12] - 2020-10-27
+## [1.1.12] - 2020-10-27
 ### Fixes
 - compatible with composer v2
 
@@ -23,16 +23,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Modified
 - secret signing keys are now automatically generated in settings if the field is left empty
 
-## 1.0.5 - 2020-02-26
+## [1.0.5] - 2020-02-26
 ### Fixed
 - fixes db installation issue
 
-
-## 1.0.1 - 2020-02-26
+## [1.0.1] - 2020-02-26
 ### Fixed
 - adds extra db field for tracking weekly views
 
 
-## 1.0.0 - 2020-02-26
+## [1.0.0] - 2020-02-26
 ### Added
 - Initial release
