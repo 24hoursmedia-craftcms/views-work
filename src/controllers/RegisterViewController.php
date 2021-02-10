@@ -15,7 +15,7 @@ class RegisterViewController extends Controller
 
     const PIXEL = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
 
-    protected $allowAnonymous = ['beacon-image'];
+    protected $allowAnonymous = self::ALLOW_ANONYMOUS_LIVE;
 
     public function actionBeaconImage(): Response
     {

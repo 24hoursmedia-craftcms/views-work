@@ -113,14 +113,6 @@ class ViewsWork extends Plugin
         );
 
         Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            static function (RegisterUrlRulesEvent $event) {
-                $event->rules['views-work/reset'] = 'views-work/reset/reset';
-            }
-        );
-
-        Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
             function (PluginEvent $event) {

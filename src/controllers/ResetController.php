@@ -19,10 +19,11 @@ class ResetController extends Controller
 {
 
     public $enableCsrfValidation = false;
-    protected $allowAnonymous = ['reset'];
+    protected $allowAnonymous = self::ALLOW_ANONYMOUS_LIVE;
 
     public function actionReset(): Response
     {
+
         $this->requirePostRequest();
 
         $settings = ViewsWork::$plugin->getSettings();

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.5] - 2021-02-10
+### Fixed
+- now uses action urls for reset instead of a named site route
+
 ## [1.2.4] - 2021-02-10
 ### Fixed
 - Fixed an error where the CP became unreachable when admin changes are prohibited
