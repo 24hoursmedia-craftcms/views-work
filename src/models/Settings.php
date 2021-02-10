@@ -30,6 +30,17 @@ class Settings extends Model
      */
     public $signKey = '';
 
+    /**
+     * Allow resetting daily, weekly views etc with an url
+     * @var bool
+     */
+    public $allowUrlReset = false;
+
+    /**
+     * Secret to append to the url reset url
+     * @var string
+     */
+    public $urlResetSecret = '';
 
 
     // Public Methods
@@ -42,7 +53,8 @@ class Settings extends Model
     {
         return [
             ['signKey', 'string'],
-            ['signKey', 'default', 'value' => bin2hex(random_bytes(32))],
+            ['allowUrlReset', 'boolean'],
+            ['urlResetSecret', 'string'],
         ];
     }
 }
