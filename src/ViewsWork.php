@@ -11,8 +11,10 @@
 namespace twentyfourhoursmedia\viewswork;
 
 
+use craft\events\RegisterUrlRulesEvent;
 use craft\services\Fields;
 use craft\web\twig\variables\CraftVariable;
+use craft\web\UrlManager;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\services\Facade;
 use twentyfourhoursmedia\viewswork\services\RegistrationUrlService;
@@ -78,6 +80,10 @@ class ViewsWork extends Plugin
         ]);
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
 
+        // validate the settings
+        $this->initSettings($this->getSettings());
+
+
         // Register our fields
         Event::on(
             Fields::class,
@@ -103,6 +109,14 @@ class ViewsWork extends Plugin
             Dashboard::EVENT_REGISTER_WIDGET_TYPES,
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = ViewsWorkWidgetWidget::class;
+            }
+        );
+
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+            static function (RegisterUrlRulesEvent $event) {
+                $event->rules['views-work/reset'] = 'views-work/reset/reset';
             }
         );
 
@@ -133,7 +147,23 @@ class ViewsWork extends Plugin
      */
     protected function createSettingsModel()
     {
-        return new Settings();
+        $settings = new Settings();
+        return $settings;
+    }
+
+    /**
+     * Ensure there are some secret keys in settings saved
+     * @param Settings $settings
+     */
+    protected function initSettings(Settings $settings) {
+        $force = [];
+        if ((string)trim($settings->signKey) === '') {
+            $force['signKey'] = Craft::$app->security->generateRandomString();
+        }
+        if ((string)trim($settings->urlResetSecret) === '') {
+            $force['urlResetSecret'] = Craft::$app->security->generateRandomString();
+        }
+        ($force !== []) && Craft::$app->plugins->savePluginSettings($this, $force);
     }
 
     /**
