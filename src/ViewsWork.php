@@ -148,22 +148,18 @@ class ViewsWork extends Plugin
     protected function createSettingsModel()
     {
         $settings = new Settings();
+        $settings->signKey = Craft::$app->security->generateRandomString();
+        $settings->urlResetSecret = Craft::$app->security->generateRandomString();
         return $settings;
     }
 
     /**
      * Ensure there are some secret keys in settings saved
      * @param Settings $settings
+     * @deprecated
      */
     protected function initSettings(Settings $settings) {
-        $force = [];
-        if ((string)trim($settings->signKey) === '') {
-            $force['signKey'] = Craft::$app->security->generateRandomString();
-        }
-        if ((string)trim($settings->urlResetSecret) === '') {
-            $force['urlResetSecret'] = Craft::$app->security->generateRandomString();
-        }
-        ($force !== []) && Craft::$app->plugins->savePluginSettings($this, $force);
+
     }
 
     /**
