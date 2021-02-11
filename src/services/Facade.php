@@ -7,15 +7,9 @@
 
 namespace twentyfourhoursmedia\viewswork\services;
 
-use Craft;
-use craft\elements\db\ElementQuery;
-use craft\elements\db\EntryQuery;
-use craft\elements\Entry;
 use craft\base\Element;
-use craft\helpers\UrlHelper;
-use craft\models\Site;
+use craft\elements\db\EntryQuery;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
-use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
@@ -28,42 +22,6 @@ use twentyfourhoursmedia\viewswork\ViewsWork;
 class Facade
 {
 
-
-    public function getCookieBlockUrl() : string
-    {
-        return ViewsWork::$plugin->blockByCookieAddOn->getBlockUrl();
-    }
-
-    public function getCookieUnblockUrl() : string
-    {
-        return ViewsWork::$plugin->blockByCookieAddOn->getUnblockUrl();
-    }
-
-    public function getCookieBlockStatusUrl() : string
-    {
-        return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl();
-    }
-
-    /**
-     * Return true if the settings require secrets
-     *
-     * @return bool
-     */
-    public function settingsRequiresSecrets() : bool
-    {
-        $settings = ViewsWork::$plugin->getSettings();
-        /* @var Settings $settings */
-        return $settings->requiresSecrets();
-    }
-
-    public function getBlockStatus() : array
-    {
-        return [
-          'blocked' =>   ViewsWork::$plugin->blockByCookieAddOn->isBlocked(
-              Craft::$app->getRequest()
-          )
-        ];
-    }
 
     public function getRecording(Element $element, $site = null)
     {
