@@ -1,0 +1,8 @@
+{% extends '_layouts/cp' %}
+
+{% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
+
+{% block main %}
+    {% include 'views-work/cp/_partials/check_settings.twig' %}
+    {{ parent() }}
+{% endblock %}

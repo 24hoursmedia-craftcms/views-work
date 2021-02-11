@@ -57,6 +57,9 @@ class Settings extends Model
     public $blockByCookieSecret = '';
 
 
+    // Private properties
+    private $secretsFields = ['urlResetSecret', 'blockByCookieSecret', 'signKey'];
+
     // Public Methods
     // =========================================================================
 
@@ -71,5 +74,30 @@ class Settings extends Model
             ['allowUrlResetGET', 'boolean'],
             ['urlResetSecret', 'string'],
         ];
+    }
+
+    /**
+     * Check if the settings require some secrets to be defined
+     *
+     * @return bool
+     */
+    public function requiresSecrets() : bool
+    {
+        foreach ($this->getAttributes(['urlResetSecret', 'blockByCookieSecret', 'signKey']) as $k => $v) {
+            if (trim($v) === '') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function populateMissingSecrets()
+    {
+
+        foreach ($this->getAttributes(['urlResetSecret', 'blockByCookieSecret', 'signKey']) as $k => $v) {
+            if (trim($v) === '') {
+                $this->{$k} = Craft::$app->security->generateRandomString();
+            }
+        }
     }
 }

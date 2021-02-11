@@ -23,8 +23,15 @@
  */
 
 return [
+    // Secrets - enter some secret strings here. They are used to generate safe urls and signatures
+    // "signKey" => "some-secret",
+    // "urlResetSecret" => "some-other-secret",
+    // "blockByCookieSecret" => "some-other-secret",
 
-    // This controls blah blah blah
-    "someAttribute" => true,
+    // Allow resetting daily, weekly views etc with an url
+    // "allowUrlReset" => false,
+
+    // Allow url reset GET method
+    // "allowUrlResetGET" => false,
 
 ];

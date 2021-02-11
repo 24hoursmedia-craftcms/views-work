@@ -15,6 +15,7 @@ use craft\base\Element;
 use craft\helpers\UrlHelper;
 use craft\models\Site;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
+use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
@@ -43,6 +44,18 @@ class Facade
         return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl();
     }
 
+    /**
+     * Return true if the settings require secrets
+     *
+     * @return bool
+     */
+    public function settingsRequiresSecrets() : bool
+    {
+        $settings = ViewsWork::$plugin->getSettings();
+        /* @var Settings $settings */
+        return $settings->requiresSecrets();
+    }
+
     public function getBlockStatus() : array
     {
         return [
@@ -62,7 +75,8 @@ class Facade
 
     const SORT_POPULAR_OPTS = ['min_views' => 0];
 
-    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS) {
+    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS)
+    {
         $opts+=self::SORT_POPULAR_OPTS;
         $query->leftJoin(
             '{{%viewswork_viewrecording}} AS _vr',
@@ -87,5 +101,4 @@ class Facade
         }
         return $query;
     }
-
 }

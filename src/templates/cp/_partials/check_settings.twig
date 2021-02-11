@@ -1,0 +1,10 @@
+{#
+Test settings and show a warning if not ok.
+#}
+{% if craft.views_work.settingsRequiresSecrets %}
+<div class="content-pane vw-bg-warning vw-mb-1">
+    {{ 'Warning, your plugin settings require secrets to be set.' }}
+    <a href="{{ cpUrl('settings/plugins/views-work') }}">{{ 'Edit them here' | t('views-work') }}</a>
+    {{ 'or create file config/views-work.php with the appropriate settings' | t('views-work') }}
+</div>
+{% endif %}
