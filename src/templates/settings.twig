@@ -107,3 +107,17 @@ Example of a line in crontab file:
     5 0 * * * php /path_to_project/craft views-work/default/reset-views
 </code>
 <br/><br/>
+
+<hr/>
+
+<h2>
+    Other
+</h2>
+
+{{ forms.textField({
+    label:'Block by cookie secret',
+    instructions: 'A secret that allows to block view registrations with a cookie',
+    id: 'blockByCookieSecret',
+    name: 'blockByCookieSecret',
+    value: settings['blockByCookieSecret']})
+}}

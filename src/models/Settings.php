@@ -48,6 +48,14 @@ class Settings extends Model
      */
     public $urlResetSecret = '';
 
+    /**
+     * Value for a cookie to block views for certain users
+     * used in urls to block/unblock view recordings for persons
+     *
+     * @var string
+     */
+    public $blockByCookieSecret = '';
+
 
     // Public Methods
     // =========================================================================

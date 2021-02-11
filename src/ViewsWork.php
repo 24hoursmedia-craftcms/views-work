@@ -16,6 +16,8 @@ use craft\services\Fields;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
+use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
+use twentyfourhoursmedia\viewswork\services\DefaultEventListeners;
 use twentyfourhoursmedia\viewswork\services\Facade;
 use twentyfourhoursmedia\viewswork\services\RegistrationUrlService;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
@@ -43,6 +45,7 @@ use yii\base\Event;
  * @property ViewsWorkService $viewsWorkService
  * @property Facade $viewsWork
  * @property RegistrationUrlService $registrationUrlService
+ * @property BlockByCookieAddOn $blockByCookieAddOn
  */
 class ViewsWork extends Plugin
 {
@@ -76,7 +79,9 @@ class ViewsWork extends Plugin
         $this->setComponents([
             'viewsWork' => Facade::class,
             'viewsWorkService' => ViewsWorkService::class,
-            'registrationUrlService' => RegistrationUrlService::class
+            'registrationUrlService' => RegistrationUrlService::class,
+            // some standard add ons
+            'blockByCookieAddOn' => BlockByCookieAddOn::class,
         ]);
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
 
@@ -121,6 +126,9 @@ class ViewsWork extends Plugin
             }
         );
 
+        // dispatch registration to default event listeners
+        $this->blockByCookieAddOn->setupListeners();
+
         Craft::info(
             Craft::t(
                 'views-work',
@@ -142,6 +150,7 @@ class ViewsWork extends Plugin
         $settings = new Settings();
         $settings->signKey = Craft::$app->security->generateRandomString();
         $settings->urlResetSecret = Craft::$app->security->generateRandomString();
+        $settings->blockByCookieSecret = Craft::$app->security->generateRandomString();
         return $settings;
     }
 

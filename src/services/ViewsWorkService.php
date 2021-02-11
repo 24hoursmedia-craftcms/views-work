@@ -26,6 +26,7 @@ use twentyfourhoursmedia\viewswork\records\ViewRecording;
 class ViewsWorkService extends Component
 {
 
+
     public const EVENT_BLOCK_ELEMENT_VIEW_REGISTRATION = 'blockElementViewRegistration';
 
     // Public Methods

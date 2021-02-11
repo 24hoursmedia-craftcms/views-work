@@ -33,6 +33,7 @@ class RegisterViewController extends Controller
 
 
         $response = new Response();
+        $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
         $response->format = $response::FORMAT_RAW;
         $response->headers->set('Content-Type', 'image/png');
         $response->content = base64_decode(self::PIXEL);
