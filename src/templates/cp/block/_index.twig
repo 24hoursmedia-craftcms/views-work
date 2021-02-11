@@ -1,0 +1,52 @@
+{% extends 'views-work/_layouts' %}
+
+{% set title = 'Views Work - block/unblock registration with a cookie' | t('views-work') %}
+{% set selectedSubnavItem = 'block' %}
+
+{% block content %}
+
+    <p>
+        <strong>
+            {{ 'You can prevent view registrations for yourself or other users by clicking on the urls below.' | t('views-work') }}
+        </strong>
+    </p>
+
+    <p>
+        {{ 'Current status:' | t('views-work') }}
+        {% set status = craft.views_work.blockStatus %}
+        {% if status.blocked %}
+            {{ 'Views will NOT be registered in this browser.' | t('views-work') }}
+        {% else %}
+            {{ 'Views will be registered in this browser.' | t('views-work') }}
+        {% endif %}
+
+    </p>
+    <hr/>
+    <p>
+        <strong>{{ 'TO BLOCK' | t('views-work') }}:</strong>
+        <br/>
+        {% set url = craft.views_work.cookieBlockUrl %}
+        {{ url }}
+        <br/>
+        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
+    </p>
+
+    <p>
+        <strong>{{ 'TO UNBLOCK' | t('views-work') }}:</strong>
+        <br/>
+        {% set url = craft.views_work.cookieUnblockUrl %}
+        {{ url }}
+        <br/>
+        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
+    </p>
+
+    <p>
+        <strong>{{ 'TO VIEW YOUR CURRENT BLOCK STATUS' | t('views-work') }}:</strong>
+        <br/>
+        {% set url = craft.views_work.cookieBlockStatusUrl %}
+        {{ url }}
+        <br/>
+        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
+    </p>
+
+{% endblock %}

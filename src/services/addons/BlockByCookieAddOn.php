@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace twentyfourhoursmedia\viewswork\services\addons;
 
 use Craft;
+use craft\helpers\UrlHelper;
 use craft\web\Request;
 use craft\web\Response;
 use twentyfourhoursmedia\viewswork\events\BlockElementViewRegistrationEvent;
@@ -96,6 +97,28 @@ class BlockByCookieAddOn
         }
         Craft::$app->getResponse()->getCookies()->remove($this->cookieName);
         return true;
+    }
+
+    public function getStatusUrl() : string
+    {
+        $settings = ViewsWork::$plugin->getSettings();
+        /* @var Settings $settings */
+        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/status');
+    }
+
+
+    public function getBlockUrl() : string
+    {
+        $settings = ViewsWork::$plugin->getSettings();
+        /* @var Settings $settings */
+        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/block', ['key' => $settings->blockByCookieSecret]);
+    }
+
+    public function getUnblockUrl() : string
+    {
+        $settings = ViewsWork::$plugin->getSettings();
+        /* @var Settings $settings */
+        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/unblock', ['key' => $settings->blockByCookieSecret]);
     }
 
     private static function secondsToTime($seconds)
