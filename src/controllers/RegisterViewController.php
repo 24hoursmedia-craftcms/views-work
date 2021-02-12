@@ -23,16 +23,14 @@ class RegisterViewController extends Controller
         $request = Craft::$app->getRequest();
 
         // get params and check signature
-        $parms = ViewsWork::$plugin->registrationUrlService->verifySignedParams($request->getQueryParams());
+        $params = ViewsWork::$plugin->registrationUrlService->verifySignedParams($request->getQueryParams());
 
-
-        $element = Craft::$app->elements->getElementById($parms['id']);
+        $element = Craft::$app->elements->getElementById($params['id']);
         $service = ViewsWork::$plugin->viewsWorkService;
-        $service->recordView($element, $parms['sid'], (float)$parms['f']);
+        $success = $service->recordView($element, $params['sid'], (float)$params['f']);
 
-
-
-        $response = new Response();
+        $response = Craft::$app->getResponse();
+        $response->headers->set('X-VW-Blocked', $success ? 'false' : 'true');
         $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
         $response->format = $response::FORMAT_RAW;
         $response->headers->set('Content-Type', 'image/png');
@@ -40,5 +38,4 @@ class RegisterViewController extends Controller
         $response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', strtotime('-10 year')));
         return $response;
     }
-
 }

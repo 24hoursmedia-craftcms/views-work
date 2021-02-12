@@ -66,14 +66,15 @@ class ViewsWorkService extends Component
         return $record;
     }
 
-    public function recordView(Element $element, $site = null, float $factor = 1)
+    public function recordView(Element $element, $site = null, float $factor = 1) : bool
     {
         $event = new BlockElementViewRegistrationEvent();
         $event->element = $element;
         $event->site = $site;
         $this->trigger(self::EVENT_BLOCK_ELEMENT_VIEW_REGISTRATION, $event);
+
         if ($event->blocked) {
-            return;
+            return false;
         }
 
         $siteId = SiteIdHelper::determineSiteId($element, $site);
@@ -86,6 +87,7 @@ class ViewsWorkService extends Component
         $recording->setAttribute('viewsThisWeek', $recording->getAttribute('viewsThisWeek') + $inc);
         $recording->save();
         $transaction->commit();
+        return true;
     }
 
 
