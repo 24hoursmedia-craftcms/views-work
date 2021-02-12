@@ -16,10 +16,10 @@ use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterUrlRulesEvent;
-use craft\helpers\UrlHelper;
 use craft\services\Dashboard;
 use craft\services\Fields;
 use craft\services\Plugins;
+use craft\web\Request;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
@@ -30,6 +30,7 @@ use twentyfourhoursmedia\viewswork\services\Facade;
 use twentyfourhoursmedia\viewswork\services\RegistrationUrlService;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
 use twentyfourhoursmedia\viewswork\twigextensions\ViewsWorkTwigExtension;
+use twentyfourhoursmedia\viewswork\variables\ViewsWorkCpVariable;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkVariable;
 use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget as ViewsWorkWidgetWidget;
 use yii\base\Event;
@@ -82,11 +83,8 @@ class ViewsWork extends Plugin
             // some standard add ons
             'blockByCookieAddOn' => BlockByCookieAddOn::class,
         ]);
+
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
-
-        // validate the settings
-        $this->initSettings($this->getSettings());
-
 
         // Register our fields
         Event::on(
@@ -104,7 +102,13 @@ class ViewsWork extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('views_work', ViewsWorkVariable::class);
+
+                $request = Craft::$app->getRequest();
+                if ($request instanceof Request && $request->isCpRequest) {
+                    $variable->set('views_work', ViewsWorkCpVariable::class);
+                } else {
+                    $variable->set('views_work', ViewsWorkVariable::class);
+                }
             }
         );
 
@@ -137,9 +141,9 @@ class ViewsWork extends Plugin
 
                 $event->navItems['views-work'] = [
                     'url' => 'views-work',
-                    'label' => 'Views Work!',
+                    'label' => 'Views Work',
                     'icon' => '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist/img/ViewsWork-icon.svg',
-                    'badgeCount' => 5,
+                    //'badgeCount' => 5,
                     'subnav' => [
                         'index' => ['label' => 'Overview', 'url' => 'views-work'],
                         'block' => ['label' => 'Block registrations', 'url' => 'views-work/block'],
@@ -147,6 +151,12 @@ class ViewsWork extends Plugin
                 ];
             }
         );
+
+        Event::on(Settings::class, Settings::EVENT_BEFORE_VALIDATE, function (\yii\base\ModelEvent $event) {
+            $settings = $event->sender;
+            /* @var Settings $settings */
+            $settings->populateMissingSecrets();
+        });
 
         // dispatch registration to default event listeners
         $this->blockByCookieAddOn->setupListeners();
@@ -164,34 +174,13 @@ class ViewsWork extends Plugin
     // Protected Methods
     // =========================================================================
 
-    /**
-     * @inheritdoc
-     */
-    public function getCpNavItem()
-    {
-        $subNavs = [];
-        $navItem = parent::getCpNavItem();
-        die('1');
-    }
+
     /**
      * @inheritdoc
      */
     protected function createSettingsModel()
     {
-        $settings = new Settings();
-        $settings->signKey = Craft::$app->security->generateRandomString();
-        $settings->urlResetSecret = Craft::$app->security->generateRandomString();
-        $settings->blockByCookieSecret = Craft::$app->security->generateRandomString();
-        return $settings;
-    }
-
-    /**
-     * Ensure there are some secret keys in settings saved
-     * @param Settings $settings
-     * @deprecated
-     */
-    protected function initSettings(Settings $settings)
-    {
+        return new Settings();
     }
 
     /**
