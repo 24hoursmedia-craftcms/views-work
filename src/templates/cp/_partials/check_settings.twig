@@ -1,7 +1,7 @@
 {#
 Test settings and show a warning if not ok.
 #}
-{% if craft.views_work.settingsRequiresSecrets %}
+{% if craft.views_work_cp.settingsRequiresSecrets %}
 <div class="content-pane vw-mb-3 vw-alert vw-alert-warning">
     {{ 'Warning, your plugin settings require secrets to be set.' }}
     <a href="{{ cpUrl('settings/plugins/views-work') }}">{{ 'Edit them here' | t('views-work') }}</a>

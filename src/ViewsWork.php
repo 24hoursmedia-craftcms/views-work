@@ -105,7 +105,7 @@ class ViewsWork extends Plugin
 
                 $request = Craft::$app->getRequest();
                 if ($request instanceof Request && $request->isCpRequest) {
-                    $variable->set('views_work', ViewsWorkCpVariable::class);
+                    $variable->set('views_work_cp', ViewsWorkCpVariable::class);
                 } else {
                     $variable->set('views_work', ViewsWorkVariable::class);
                 }

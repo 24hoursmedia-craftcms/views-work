@@ -57,4 +57,10 @@ class CpFacade extends Facade
         ];
     }
 
+    public function getSettings() : Settings
+    {
+        $settings = ViewsWork::$plugin->getSettings();
+        /* @var Settings $settings */
+        return $settings;
+    }
 }

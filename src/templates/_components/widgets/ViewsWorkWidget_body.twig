@@ -21,7 +21,7 @@
     {% else %}
     <ul>
         {% for item in entries %}
-            {% set views = craft.views_work.recording(item) %}
+            {% set views = craft.views_work_cp.recording(item) %}
             {# views \twentyfourhoursmedia\viewswork\models\ViewRecording #}
             {% set url = item.cpEditUrl %}
             <li>
