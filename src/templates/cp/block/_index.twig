@@ -13,42 +13,46 @@
         </strong>
     </p>
 
-    <p>
-        {{ 'Current status:' | t('views-work') }}
-        {% set status = craft.views_work.blockStatus %}
-        {% if status.blocked %}
-            {{ 'Views will NOT be registered in this browser.' | t('views-work') }}
-        {% else %}
-            {{ 'Views will be registered in this browser.' | t('views-work') }}
-        {% endif %}
 
-    </p>
+    {% set status = craft.views_work_cp.blockStatus %}
+    {% if status.blocked %}
+        <span class="vw-badge vw-badge-secondary">{{ 'REGISTRATION FOR THIS BROWSER: OFF' | t('views_work') }}</span>
+    {% else %}
+        <span class="vw-badge vw-badge-success">{{ 'REGISTRATION FOR THIS BROWSER: ON' | t('views_work') }}</span>
+    {% endif %}
+
+
+
     <hr/>
-    <p>
-        <strong>{{ 'TO BLOCK' | t('views-work') }}:</strong>
-        <br/>
-        {% set url = craft.views_work.cookieBlockUrl %}
-        {{ url }}
-        <br/>
-        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
-    </p>
 
-    <p>
-        <strong>{{ 'TO UNBLOCK' | t('views-work') }}:</strong>
-        <br/>
-        {% set url = craft.views_work.cookieUnblockUrl %}
-        {{ url }}
-        <br/>
-        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
-    </p>
+    <div class="vw-grid vw-grid-cols-12 vw-gap-2 vw-gap-y-6">
+        <div class="vw-col-span-10">
+            <strong>{{ 'TO BLOCK' | t('views-work') }}:</strong>
+            <br/>
+            {% set url = craft.views_work_cp.cookieBlockUrl %}
+            {{ url }}
+        </div>
+        <div class="vw-col-span-2">
+            <a href="{{ url }}" target="_blank"
+               class="vw-btn vw-btn-danger vw-float-right vw-w-full">{{ 'block now' | t('views-work') }}</a>
+        </div>
 
-    <p>
-        <strong>{{ 'TO VIEW YOUR CURRENT BLOCK STATUS' | t('views-work') }}:</strong>
-        <br/>
-        {% set url = craft.views_work.cookieBlockStatusUrl %}
-        {{ url }}
-        <br/>
-        (<a href="{{ url }}" target="_blank">{{ 'visit' | t('views-work') }}</a>)
-    </p>
+        <div class="vw-col-span-10">
+            <strong>{{ 'TO UNBLOCK' | t('views-work') }}:</strong>
+            <br/>
+            {% set url = craft.views_work_cp.cookieUnblockUrl %}
+            {{ url }}
+        </div>
+        <div class="vw-col-span-2">
+            <a href="{{ url }}" target="_blank"
+               class="vw-btn vw-btn-info vw-float-right vw-w-full">{{ 'unblock now' | t('views-work') }}</a>
+        </div>
+
+        <div class="vw-col-span-12">
+            {% set url = craft.views_work_cp.cookieBlockStatusUrl %}
+            <a href="{{ url }}" target="_blank">View the current status</a> at {{ url }}
+        </div>
+
+    </div>
 
 {% endblock %}
