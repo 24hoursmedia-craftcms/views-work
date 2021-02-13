@@ -29,18 +29,19 @@ class ViewsWorkAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist";
+        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build";
 
         $this->depends = [
             CpAsset::class,
         ];
 
         $this->js = [
-            'js/ViewsWork.js',
+            'runtime.js',
+            'app.js',
         ];
 
         $this->css = [
-            'css/tailwind.css'
+            'app.css'
         ];
 
         parent::init();

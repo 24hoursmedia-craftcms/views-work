@@ -1,31 +1,19 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// https://medium.com/better-programming/tailwindcss-and-symfonys-webpack-encore-7bfc8c18665b
 
-module.exports = {
-    entry: './src/styles.css',
-    mode: process.env.NODE_ENV,
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        { loader: 'css-loader', options: { importLoaders: 1 } },
-                        'postcss-loader',
-                    ],
-                }),
-            },
-        ],
-    },
-    plugins: [
-        new ExtractTextPlugin('styles.css', {
-            disable: process.env.NODE_ENV === 'development',
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'src/index.html',
-        }),
-    ],
-}
+const Encore = require('@symfony/webpack-encore')
+Encore
+    .setOutputPath('../build')
+    .setPublicPath('')
+    //.addStyleEntry('tailwind', './css/tailwind.css')
+
+    .addEntry('app', './js/app.js')
+    .enableSassLoader()
+    // enable post css loader
+    .enablePostCssLoader((options) => {
+        options.postcssOptions = {
+            // the directory where the postcss.config.js file is stored
+            config: './postcss.config.js',
+        }
+    })
+    .enableSingleRuntimeChunk();
+module.exports = Encore.getWebpackConfig();

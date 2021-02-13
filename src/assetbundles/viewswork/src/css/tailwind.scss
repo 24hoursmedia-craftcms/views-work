@@ -1,0 +1,90 @@
+
+/*@tailwind base;*/
+@tailwind components;
+@tailwind utilities;
+@tailwind colors;
+
+/*
+https://tailwind-starter-kit.now.sh/learn
+https://tailwindcss.com/docs/customizing-colors
+*/
+
+.vw-alert {
+    &-warning {
+        @apply vw-bg-warning vw-text-white
+    }
+    &-warning a {
+        @apply vw-text-warning-dark
+    }
+    &-info {
+        @apply vw-bg-info vw-text-info-extralight
+    }
+    &-info a {
+        @apply vw-text-info-dark
+    }
+}
+
+.vw-badge {
+    @apply vw-inline-flex vw-items-center vw-justify-center vw-px-2 vw-py-1 vw-text-xs vw-leading-none vw-rounded vw-font-semibold
+}
+.vw-badge {
+
+    &-circle {
+        @apply vw-rounded-full
+    }
+    &-info {
+        @apply vw-text-white vw-bg-info
+    }
+    &-warning {
+        @apply vw-text-white vw-bg-warning
+    }
+    &-danger {
+        @apply vw-text-white vw-bg-danger
+    }
+    &-success {
+        @apply vw-text-white vw-bg-success
+    }
+    &-secondary {
+        @apply vw-text-white vw-bg-secondary
+    }
+}
+
+
+.vw-btn {
+    display: inline-block;
+    @apply vw-h-4 vw-px-4 vw-pt-1 vw-pb-2 vw-mt-1 vw-mt-1 vw-m-2 vw-text-sm vw-text-white vw-bg-primary vw-rounded vw-font-semibold hover:vw-bg-primary-light vw-text-center
+}
+
+.vw-btn {
+    &:hover {
+        text-decoration: none;
+    }
+    &-info {
+        @apply vw-text-white vw-bg-info
+    }
+    &-danger {
+        @apply vw-text-white vw-bg-danger
+    }
+    &-success {
+        @apply vw-text-white vw-bg-success
+    }
+    &-warning {
+        @apply vw-text-white vw-bg-warning
+    }
+}
+
+
+.vw-widget {
+    &-heading {
+        @apply vw-pb-2
+    }
+    &-heading .vw-heading {
+        @apply vw-font-bold
+    }
+    &-section {
+        @apply vw-mb-3
+    }
+    &-footer {
+        @apply vw-mt-2 vw-border-solid vw-border-t vw-pt-1 vw-border-info vw-text-xs
+    }
+}
