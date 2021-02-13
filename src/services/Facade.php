@@ -9,6 +9,8 @@ namespace twentyfourhoursmedia\viewswork\services;
 
 use craft\base\Element;
 use craft\elements\db\EntryQuery;
+use craft\helpers\DateTimeHelper;
+use craft\helpers\Db;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
 use twentyfourhoursmedia\viewswork\ViewsWork;
@@ -33,7 +35,7 @@ class Facade
 
     const SORT_POPULAR_OPTS = ['min_views' => 0];
 
-    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS)
+    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS) : EntryQuery
     {
         $opts+=self::SORT_POPULAR_OPTS;
         $query->leftJoin(
@@ -57,6 +59,24 @@ class Facade
         if ($minViews > 0) {
             $query->andWhere('_vr.' . $sortField . '>=' . (int)$opts['min_views']);
         }
+        return $query;
+    }
+
+    /**
+     * Sort items by most recently viewed
+     *
+     * @param EntryQuery $query
+     */
+    public function sortRecent(EntryQuery $query, \DateTimeInterface $after) : EntryQuery
+    {
+        $query->leftJoin(
+            '{{%viewswork_viewrecording}} AS _vr',
+            'elements_sites.elementId=_vr.elementId AND elements_sites.siteId=_vr.siteId'
+        );
+        $query->andWhere(Db::parseDateParam('_vr.dateUpdated', $after, '>='));
+        $orderBy = $query->orderBy;
+        $query->orderBy('_vr.dateUpdated DESC');
+        $query->addOrderBy($orderBy);
         return $query;
     }
 }

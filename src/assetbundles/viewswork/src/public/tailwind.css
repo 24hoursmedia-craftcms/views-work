@@ -26,6 +26,9 @@ https://tailwindcss.com/docs/customizing-colors
 .vw-badge {
     @apply vw-inline-flex vw-items-center vw-justify-center vw-px-2 vw-py-1 vw-text-xs vw-leading-none vw-rounded vw-font-semibold
 }
+.vw-badge.vw-badge-circle {
+    @apply vw-rounded-full
+}
 .vw-badge.vw-badge-info {
     @apply vw-text-white vw-bg-info
 }

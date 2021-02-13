@@ -27,12 +27,14 @@ use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
 use twentyfourhoursmedia\viewswork\services\addons\BlockCrawlersAddOn;
+use twentyfourhoursmedia\viewswork\services\CpFacade;
 use twentyfourhoursmedia\viewswork\services\Facade;
 use twentyfourhoursmedia\viewswork\services\RegistrationUrlService;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
 use twentyfourhoursmedia\viewswork\twigextensions\ViewsWorkTwigExtension;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkCpVariable;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkVariable;
+use twentyfourhoursmedia\viewswork\widgets\ViewedNowWidget;
 use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget as ViewsWorkWidgetWidget;
 use yii\base\Event;
 
@@ -45,6 +47,7 @@ use yii\base\Event;
  *
  * @property ViewsWorkService $viewsWorkService
  * @property Facade $viewsWork
+ * @property CpFacade $viewsWorkCp
  * @property RegistrationUrlService $registrationUrlService
  * @property BlockByCookieAddOn $blockByCookieAddOn
  * @property BlockCrawlersAddOn $blockCrawlersAddOn
@@ -80,6 +83,7 @@ class ViewsWork extends Plugin
 
         $this->setComponents([
             'viewsWork' => Facade::class,
+            'viewsWorkCp' => CpFacade::class,
             'viewsWorkService' => ViewsWorkService::class,
             'registrationUrlService' => RegistrationUrlService::class,
             // some standard add ons
@@ -120,6 +124,7 @@ class ViewsWork extends Plugin
             Dashboard::EVENT_REGISTER_WIDGET_TYPES,
             function (RegisterComponentTypesEvent $event) {
                 $event->types[] = ViewsWorkWidgetWidget::class;
+                $event->types[] = ViewedNowWidget::class;
             }
         );
 
