@@ -61,3 +61,16 @@ https://tailwindcss.com/docs/customizing-colors
 .vw-btn.vw-btn-warning {
     @apply vw-text-white vw-bg-warning
 }
+
+.vw-widget-heading {
+    @apply vw-pb-2
+}
+.vw-widget-heading .vw-heading {
+    @apply vw-font-bold
+}
+.vw-widget-section {
+    @apply vw-mb-3
+}
+.vw-widget-footer {
+    @apply vw-mt-2 vw-border-solid vw-border-t vw-pt-1 vw-border-info vw-text-xs
+}
