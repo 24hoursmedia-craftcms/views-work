@@ -39,7 +39,8 @@
                         #}
                     {% endif %}
                 </div>
-                <div class="vw-col-span-1 vw-text-right">
+                <div class="vw-col-span-1">
+                    <div class="vw-block vw-float-right ">
                     <span class="vw-badge vw-badge-success">
                         {% switch stat %}
                         {% case 'total' %}
@@ -52,16 +53,19 @@
                             {{ views.today }}
                         {% endswitch %}
                     </span>
+                    </div>
                 </div>
-                <div class="vw-col-span-1 vw-text-right">
+                <div class="vw-col-span-1">
+                    <div class="vw-ml-1 vw-text-right">
                     {% set url = item.url | trim %}
-                    {% if not ('?' in url) %}
-                        {% set url = url ~ '?' %}
-                    {% endif %}
-                    {% set url = url ~ 'vw-skip-reg=1' %}
-                    {% if url %}
-                        <a href="{{ url }}" target="_blank" data-icon="world"></a>
-                    {% endif %}
+                        {% if not ('?' in url) %}
+                            {% set url = url ~ '?' %}
+                        {% endif %}
+                        {% set url = url ~ 'vw-skip-reg=1' %}
+                        {% if url %}
+                            <a href="{{ url }}" target="_blank" data-icon="world"></a>
+                        {% endif %}
+                        </div>
                 </div>
             {% endfor %}
         </div>
