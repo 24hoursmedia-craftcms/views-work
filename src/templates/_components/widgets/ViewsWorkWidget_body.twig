@@ -46,11 +46,11 @@
                         {% switch stat %}
                         {% case 'total' %}
                             {{ views.total }}
-                        {% case 'thisMonth' %}
+                        {% case 'month' %}
                             {{ views.thisMonth }}
-                        {% case 'thisWeek' %}
+                        {% case 'week' %}
                             {{ views.thisWeek }}
-                        {% case 'today' %}
+                        {% case 'day' %}
                             {{ views.today }}
                         {% endswitch %}
                     </span>
@@ -97,7 +97,7 @@
             <span class="vw-badge vw-badge-info vw-w-20">{{ 'This month' | t('views-work') }}</span>
             <span class="vw-heading">Top {{ count }}</span>
         </div>
-        {{ macros.show(monthly, 'thisMonth') }}
+        {{ macros.show(monthly, 'month') }}
     </div>
 {% endif %}
 
@@ -108,7 +108,7 @@
             <span class="vw-heading">Top {{ count }}</span>
         </div>
 
-        {{ macros.show(weekly, 'thisWeek') }}
+        {{ macros.show(weekly, 'week') }}
     </div>
 {% endif %}
 
@@ -118,7 +118,7 @@
             <span class="vw-badge vw-badge-info vw-w-20">{{ 'Today' | t('views-work') }}</span>
             <span class="vw-heading">Top {{ count }}</span>
         </div>
-        {{ macros.show(today, 'today') }}
+        {{ macros.show(today, 'day') }}
     </div>
 {% endif %}
 

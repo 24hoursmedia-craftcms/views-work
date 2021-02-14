@@ -133,20 +133,19 @@ class ViewsWorkWidget extends Widget
 
 
         if ($this->showTotal) {
-            $total = $facade->sortPopular(Entry::find()->site('*')->limit($this->count), 'total', ['min_views' => 1]);
+            $total = Entry::find()->site('*')->orderByPopular('total')->limit($this->count);
             is_numeric($section) ? $total->sectionId($section) : $total->section($section);
         }
         if ($this->showMonthly) {
-            $monthly = $facade->sortPopular(Entry::find()->site('*')->limit($this->count), 'month', ['min_views' => 1]);
+            $monthly = Entry::find()->site('*')->orderByPopular('month')->limit($this->count);
             is_numeric($section) ? $monthly->sectionId($section) : $monthly->section($section);
         }
         if ($this->showWeekly) {
-            $weekly = $facade->sortPopular(Entry::find()->site('*')->limit($this->count), 'week', ['min_views' => 1]);
+            $weekly = Entry::find()->site('*')->orderByPopular('week')->limit($this->count);
             is_numeric($section) ? $weekly->sectionId($section) : $weekly->section($section);
         }
-
         if ($this->showDaily) {
-            $daily = $facade->sortPopular(Entry::find()->site('*')->limit($this->count), 'day', ['min_views' => 1]);
+            $daily = Entry::find()->site('*')->orderByPopular('day')->limit($this->count);
             is_numeric($section) ? $daily->sectionId($section) : $daily->section($section);
         }
 
