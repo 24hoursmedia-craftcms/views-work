@@ -1,0 +1,16 @@
+{% import 'views-work/_macros.twig' as vcp %}
+
+<div class="content-pane">
+    <h2>{{ vcp.t('Widgets') }}</h2>
+    <p>
+        {{ vcp.t('Widgets available in the Craft Dashboard:') }}
+    </p>
+    <p>
+        <strong class="vw-text-info">{{ vcp.t('Viewed Now') }}</strong>:<br/>
+        {{ vcp.t('A widget that shows entries that are being currently viewed in near real time.') }}
+    </p>
+    <p>
+        <strong class="vw-text-info">{{ vcp.t('Popular content') }}</strong>:<br/>
+        {{ vcp.t('A widget that shows entries that are most viewed today, this week, this month or all time.') }}
+    </p>
+</div>
