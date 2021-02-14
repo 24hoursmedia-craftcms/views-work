@@ -23,13 +23,21 @@ const applyState = ($el, state) => {
     $stateContainer.removeClass(`${pfx}rx-${prevState}`).addClass(`${pfx}rx-${state}`);
 }
 
+const toBool = (v) => {
+    if ((v == 'true') || (v == '1')) {
+        return true;
+    }
+    return false;
+}
 
 const run = ($el) => {
     const
         uri = $el.data(`${dataPrefix}uri`),
         interval = Math.max(parseInt($el.data(`${dataPrefix}interval`) ?? 5000), 2000),
-        state = $el.data(stateAttr) ?? STATE_NEW
+        state = $el.data(stateAttr) ?? STATE_NEW,
+        autoStart = toBool($el.data(`${dataPrefix}autostart`))
     ;
+    console.log($el.data(`${dataPrefix}autostart`));
     if (!uri) {
         return;
     }
@@ -46,10 +54,11 @@ const run = ($el) => {
             success: (data) => {
                 $el.html(data);
                 applyState($el, STATE_READY);
-                setTimeout(() => {
-                    run($el);
-                }, interval);
-
+                if (autoStart) {
+                    setTimeout(() => {
+                        run($el);
+                    }, interval);
+                }
             },
             error: () => {
                 applyState($el, STATE_ERROR);

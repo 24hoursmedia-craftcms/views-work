@@ -11,8 +11,11 @@
 namespace twentyfourhoursmedia\viewswork\assetbundles\viewsworkwidgetwidget;
 
 use Craft;
+use craft\helpers\App;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
+use twentyfourhoursmedia\viewswork\assetbundles\viewswork\ViewsWorkAsset;
+use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget;
 
 /**
  * @author    24hoursmedia
@@ -29,18 +32,18 @@ class ViewsWorkWidgetWidgetAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build";
+        $this->sourcePath = ViewsWorkAsset::getSourcePath();
 
         $this->depends = [
             CpAsset::class,
         ];
 
         $this->js = [
-           'app.js',
+           'viewswork.js',
         ];
 
         $this->css = [
-            'app.css',
+            'viewswork.css',
         ];
 
         parent::init();

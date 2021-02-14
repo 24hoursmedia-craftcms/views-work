@@ -23,6 +23,7 @@ class ViewedNowWidget extends Widget
     public $seconds = 30;
     public $count = 5;
     public $widgetTitle = '';
+    public $enableAutoRefresh = true;
 
     public static function displayName(): string
     {
@@ -64,6 +65,7 @@ class ViewedNowWidget extends Widget
                 ['seconds', 'default', 'value' => 30],
                 ['count', 'integer'],
                 ['count', 'default', 'value' => 5],
+                ['enableAutoRefresh', 'boolean']
             ]
         );
         return $rules;
@@ -91,7 +93,8 @@ class ViewedNowWidget extends Widget
 
         $viewModel = [
             'seconds' => $this->seconds,
-            'count' => $this->count
+            'count' => $this->count,
+            'enableAutoRefresh' => $this->enableAutoRefresh
         ];
 
         $html = Craft::$app->getView()->renderTemplate(

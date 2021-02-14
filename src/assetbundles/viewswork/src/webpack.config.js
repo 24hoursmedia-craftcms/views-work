@@ -2,11 +2,11 @@
 
 const Encore = require('@symfony/webpack-encore')
 Encore
-    .setOutputPath('../build')
+    .setOutputPath(process.env.NODE_ENV === "production" ? '../build' : '../build-dev')
     .setPublicPath('')
     //.addStyleEntry('tailwind', './css/tailwind.css')
 
-    .addEntry('app', './js/app.js')
+    .addEntry('viewswork', './js/app.js')
     .enableSassLoader()
     // enable post css loader
     .enablePostCssLoader((options) => {
