@@ -14,117 +14,61 @@
 #}
 
 {% import _self as macros %}
-{% macro show(entries, stat) %}
+{% macro show(entries) %}
 
     {% if entries | length == 0 %}
-        <p class="vw-pb-2">No items.</p>
+        <p>No items.</p>
     {% else %}
-        <div class="vw-grid vw-grid-cols-12 vw-gap-1 vw-pb-2">
-            {% for item in entries %}
-                {% set views = craft.views_work_cp.recording(item) %}
-                {# views \twentyfourhoursmedia\viewswork\models\ViewRecording #}
-                {% set url = item.cpEditUrl %}
-                <div class="vw-col-span-10">
-                    {% if url is empty %}
-                        <div class="vw-overflow-ellipsis vw-truncate"><span>{{ item.title }}</span></div>
-                    {% else %}
-                        <div class="vw-overflow-ellipsis vw-truncate">
-                            <a href="{{ url }}">{{ item.title }}</a>
-                        </div>
-                        {#
-                        <span class="light">
+    <ul>
+        {% for item in entries %}
+            {% set views = craft.views_work.recording(item) %}
+            {# views \twentyfourhoursmedia\viewswork\models\ViewRecording #}
+            {% set url = item.cpEditUrl %}
+            <li>
+                {% if url is empty %}
+                    {{ item.title }}
+                {% else %}
+                    <a href="{{ url }}">{{ item.title }}</a>
+                    <span class="light">
                             {{ item.dateCreated|timestamp('short') }}
-                            {%- if item.author %}, {{ item.author.username }}{% endif -%}
+                        {%- if item.author %}, {{ item.author.username }}{% endif -%}
                         </span>
-                        #}
-                    {% endif %}
-                </div>
-                <div class="vw-col-span-1">
-                    <div class="vw-block vw-float-right ">
-                    <span class="vw-badge vw-badge-success">
-                        {% switch stat %}
-                        {% case 'total' %}
-                            {{ views.total }}
-                        {% case 'thisMonth' %}
-                            {{ views.thisMonth }}
-                        {% case 'thisWeek' %}
-                            {{ views.thisWeek }}
-                        {% case 'today' %}
-                            {{ views.today }}
-                        {% endswitch %}
-                    </span>
-                    </div>
-                </div>
-                <div class="vw-col-span-1">
-                    <div class="vw-ml-1 vw-text-right">
-                    {% set url = item.url | trim %}
-                        {% if not ('?' in url) %}
-                            {% set url = url ~ '?' %}
-                        {% endif %}
-                        {% set url = url ~ 'vw-skip-reg=1' %}
-                        {% if url %}
-                            <a href="{{ url }}" target="_blank" data-icon="world"></a>
-                        {% endif %}
-                        </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endif %}
+                <br/>
+                <small style="font-size: 11px;">total: {{ views.total }} month:{{ views.thisMonth }} week:{{ views.thisWeek }} day:{{ views.today }}</small>
+            </li>
+        {% endfor %}
+    </ul>
     {% endif %}
 {% endmacro %}
 {% set iconUrl = view.getAssetManager().getPublishedUrl('@twentyfourhoursmedia/viewswork/assetbundles/viewsworkwidgetwidget/dist', true) ~ '/img/ViewsWorkWidget-icon.svg' %}
 
+{#
+<img src="{{ iconUrl }}" height="64" width="64" />
+#}
 
 {% if section %}
-    <div class="vw-widget-heading">
-        <span class="vw-heading">Showing items for section `{{ section.name }}`</span>
-    </div>
+    <p>Showing items for section `{{ section.name }}`</p>
 {% endif %}
-
 {% if showTotal %}
-    <div class="vw-widget-section">
-        <div class="vw-widget-heading">
-            <span class="vw-badge vw-badge-info vw-w-20">{{ 'All time' | t('views-work') }}</span>
-            <span class="vw-heading">Top {{ count }}</span>
-        </div>
-        {{ macros.show(total, 'total') }}
-    </div>
+<h3>Top {{ count }} all time</h3>
+{{ macros.show(total) }}
 {% endif %}
 
 {% if showMonthly %}
-    <div class="vw-widget-section">
-        <div class="vw-widget-heading">
-            <span class="vw-badge vw-badge-info vw-w-20">{{ 'This month' | t('views-work') }}</span>
-            <span class="vw-heading">Top {{ count }}</span>
-        </div>
-        {{ macros.show(monthly, 'thisMonth') }}
-    </div>
+<h3>Top {{ count }} this month</h3>
+{{ macros.show(monthly) }}
 {% endif %}
 
 {% if showWeekly %}
-    <div class="vw-widget-section">
-        <div class="vw-widget-heading">
-            <span class="vw-badge vw-badge-info vw-w-20">{{ 'This week' | t('views-work') }}</span>
-            <span class="vw-heading">Top {{ count }}</span>
-        </div>
-
-        {{ macros.show(weekly, 'thisWeek') }}
-    </div>
+<h3>Top {{ count }} this week</h3>
+{{ macros.show(weekly) }}
 {% endif %}
 
 {% if showDaily %}
-    <div class="vw-widget-section">
-        <div class="vw-widget-heading">
-            <span class="vw-badge vw-badge-info vw-w-20">{{ 'Today' | t('views-work') }}</span>
-            <span class="vw-heading">Top {{ count }}</span>
-        </div>
-        {{ macros.show(today, 'today') }}
-    </div>
+<h3>Top {{ count }} today</h3>
+{{ macros.show(today) }}
 {% endif %}
-
-<div class="vw-widget-footer">
-    &copy; views-work by <a href="https://www.24hoursmedia.com/en" target="_blank">24hoursmedia</a>. <a
-            href="https://io.24hoursmedia.com/views-work">visit plugin page <span data-icon="circlerarr"></span></a>
-</div>
 
 
 
