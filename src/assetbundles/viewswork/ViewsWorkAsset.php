@@ -11,6 +11,7 @@
 namespace twentyfourhoursmedia\viewswork\assetbundles\viewswork;
 
 use Craft;
+use craft\helpers\App;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
@@ -24,12 +25,20 @@ class ViewsWorkAsset extends AssetBundle
     // Public Methods
     // =========================================================================
 
+    public static function getSourcePath() : string {
+        $isDev = App::env('ENVIRONMENT') === 'dev' || App::env('ENVIRONMENT') === 'development';
+        return $isDev ?
+            '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build-dev' :
+            '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build';
+
+    }
+
     /**
      * @inheritdoc
      */
     public function init()
     {
-        $this->sourcePath = "@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build";
+        $this->sourcePath = self::getSourcePath();
 
         $this->depends = [
             CpAsset::class,
@@ -37,11 +46,11 @@ class ViewsWorkAsset extends AssetBundle
 
         $this->js = [
             'runtime.js',
-            'app.js',
+            'viewswork.js',
         ];
 
         $this->css = [
-            'app.css'
+            'viewswork.css'
         ];
 
         parent::init();
