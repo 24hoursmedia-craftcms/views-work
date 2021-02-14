@@ -40,7 +40,7 @@ class ViewsWorkAsset extends AssetBundle
         ];
 
         $this->css = [
-            'css/tailwind.css'
+            'css/ViewsWork.css',
         ];
 
         parent::init();
