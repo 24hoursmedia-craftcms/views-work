@@ -14,6 +14,7 @@
 #}
 
 {% import "_includes/forms" as forms %}
+{% import 'views-work/_macros.twig' as vcp %}
 
 {% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
 
@@ -75,7 +76,6 @@
             on: settings['allowUrlResetGET'],
             value: 1
         }) }}
-
     </div>
 </div>
 {% if settings.allowUrlReset %}
@@ -117,6 +117,25 @@ Example of a line in crontab file:
 <br/><br/>
 
 <hr/>
+
+{#
+<h3>{{ vcp.t('Experimental') }}</h3>
+
+<p>{{ vcp.t('Enabling experimental features may give you early access to the following features:') }}</p>
+
+<ul class="vw-mt-2 vw-mb-2">
+    <li>- {{ vcp.t('Sorting entries by popularity in the content section of the Craft control panel') }}</li>
+</ul>
+
+{{ forms.lightswitch({
+    label: 'Enable experimental features',
+    id: 'enableExperimentalFeatures',
+    name: 'enableExperimentalFeatures',
+    on: settings['enableExperimentalFeatures'],
+    value: 1
+}) }}
+#}
+
 
 
 

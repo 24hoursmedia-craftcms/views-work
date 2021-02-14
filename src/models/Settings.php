@@ -56,6 +56,11 @@ class Settings extends Model
      */
     public $blockByCookieSecret = '';
 
+    /**
+     * @var bool
+     */
+    public $enableExperimentalFeatures = false;
+
 
     // Private properties
     private $secretsFields = ['urlResetSecret', 'blockByCookieSecret', 'signKey'];
@@ -73,6 +78,7 @@ class Settings extends Model
             ['allowUrlReset', 'boolean'],
             ['allowUrlResetGET', 'boolean'],
             ['urlResetSecret', 'string'],
+            ['enableExperimentalFeatures', 'boolean'],
         ];
     }
 

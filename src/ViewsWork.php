@@ -92,6 +92,8 @@ class ViewsWork extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        $experimental = $this->getSettings()->enableExperimentalFeatures;
+
         $this->setComponents([
             'viewsWork' => Facade::class,
             'viewsWorkCp' => CpFacade::class,
@@ -204,6 +206,9 @@ class ViewsWork extends Plugin
             }
         );
 */
+
+
+
         Event::on(
             Entry::class,
             Element::EVENT_REGISTER_SORT_OPTIONS,
