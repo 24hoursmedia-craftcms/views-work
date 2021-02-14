@@ -13,6 +13,7 @@
  */
 #}
 
+{% import 'views-work/_macros' as cpmacros %}
 {% import _self as macros %}
 {% macro show(entries, stat) %}
 
@@ -121,10 +122,7 @@
     </div>
 {% endif %}
 
-<div class="vw-widget-footer">
-    &copy; views-work by <a href="https://www.24hoursmedia.com/en" target="_blank">24hoursmedia</a>. <a
-            href="https://io.24hoursmedia.com/views-work">visit plugin page <span data-icon="circlerarr"></span></a>
-</div>
+{% include 'views-work/_partials/widget_footer.twig' %}
 
 
 

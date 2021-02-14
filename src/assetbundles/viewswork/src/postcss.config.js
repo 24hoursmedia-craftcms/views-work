@@ -6,6 +6,7 @@ const cssnano = require('cssnano');
 const cssNanoAdvOpts = {
 
 }
+
 // https://github.com/anibalsanchez/XT-TailwindCSS-Starter
 module.exports = {
     plugins: [

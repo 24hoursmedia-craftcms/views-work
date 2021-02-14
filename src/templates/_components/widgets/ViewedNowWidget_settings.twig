@@ -1,0 +1,27 @@
+{% import "_includes/forms" as forms %}
+{% import 'views-work/_macros' as cpmacros %}
+{% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
+
+{{ forms.textField({
+    label: 'Widget title',
+    instructions: 'Title to display on the widget',
+    id: 'widgetTitle',
+    name: 'widgetTitle',
+    value: widget['widgetTitle']})
+}}
+
+{{ forms.textField({
+    label: 'Number of items',
+    instructions: 'Max number of items to show',
+    id: 'count',
+    name: 'count',
+    value: widget['count']})
+}}
+
+{{ forms.textField({
+    label: 'Seconds',
+    instructions: 'How many seconds the last view was registered',
+    id: 'seconds',
+    name: 'seconds',
+    value: widget['seconds']})
+}}
