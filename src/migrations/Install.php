@@ -143,6 +143,10 @@ class Install extends Migration
             $this->db->getIndexName('{{%viewswork_viewrecording}}', ['viewsThisMonth'], false),
             '{{%viewswork_viewrecording}}', ['viewsThisMonth'], false
         );
+        $this->createIndex(
+            $this->db->getIndexName('{{%viewswork_viewrecording}}', ['dateUpdated'], false),
+            '{{%viewswork_viewrecording}}', ['dateUpdated'], false
+        );
     }
 
     /**
