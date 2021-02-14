@@ -25,13 +25,21 @@ class ViewedNowWidgetController extends Controller
         $r = $this->request;
         $seconds = (int)$r->getQueryParam('seconds', 30);
         $count = (int)$r->getQueryParam('count', 5);
-        $facade = ViewsWork::$plugin->viewsWork;
+
+        $allSites = filter_var($r->getQueryParam('allSites'), FILTER_VALIDATE_BOOLEAN);
+        $siteId =(int)$r->getQueryParam('siteId', 0);
 
 
         $after = DateTimeHelper::currentUTCDateTime();
         $after->modify('-' . (string)$seconds . ' seconds');
 
-        $query = Entry::find()->site('*')->orderByRecentlyViewed($after);
+        $query = Entry::find()->orderByRecentlyViewed($after);
+        if ($allSites) {
+            $query->site('*');
+        } elseif ($siteId) {
+            $query->siteId($siteId);
+        }
+
         $query->limit($count);
         $total = $query->count();
 

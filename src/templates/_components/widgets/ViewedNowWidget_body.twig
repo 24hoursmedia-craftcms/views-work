@@ -17,7 +17,9 @@
             class="vw-js-rx-refresh"
             data-vw-rx-refresh-uri="{{ actionUrl('views-work/viewed-now-widget/content', {
                 count: count,
-                seconds: seconds
+                seconds: seconds,
+                siteId: siteId,
+                allSites: allSites ? 'true' : 'false'
             }) }}"
             data-vw-rx-refresh-state-container="#{{ container_id }}"
             data-vw-rx-refresh-autostart="{{ enableAutoRefresh ? 'true' : 'false' }}"

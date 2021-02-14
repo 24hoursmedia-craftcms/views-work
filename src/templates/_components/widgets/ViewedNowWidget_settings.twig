@@ -2,6 +2,36 @@
 {% import 'views-work/_macros' as cpmacros %}
 {% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
 
+{% if craft.app.getIsMultiSite() %}
+    {% set editableSites = craft.app.sites.getEditableSites() %}
+
+
+    {% if editableSites|length > 1 %}
+        {% set siteInput %}
+            <div class="select">
+                <select id="site-id" name="siteId">
+                    {% for site in editableSites %}
+                        <option value="{{ site.id }}"{% if site.id == widget.siteId %} selected{% endif %}>{{ site.name|t('site') }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endset %}
+
+        {{ forms.field({
+            id: 'site-id',
+            label: "Site"|t('app')
+        }, siteInput) }}
+
+
+        {{ forms.lightswitch({
+            label: 'Ignore selected site and use all sites',
+            id: 'allSites',
+            name: 'allSites',
+            on: widget['allSites']})
+        }}
+    {% endif %}
+{% endif %}
+
 {{ forms.textField({
     label: 'Widget title',
     instructions: 'Title to display on the widget',
