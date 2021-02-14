@@ -13,11 +13,11 @@
     <p>{{ vcp.t('To exclude yourself or others from view registrations, you can visit one of the following links.') }}</p>
 
     {% set url = craft.views_work_cp.cookieBlockUrl %}
-    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-danger">{{ vcp.t('DISABLE') }}</a> {{ vcp.t('To exclude a browser from registrations:') }}</p>
+    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-danger">{{ vcp.t('DISABLE NOW') }}</a> {{ vcp.t('To exclude a browser from registrations:') }}</p>
     <div class="vw-bg-gray-100 vw-p-2"><code>{{ url }}</code></div>
 
     {% set url = craft.views_work_cp.cookieUnblockUrl %}
-    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-success">{{ vcp.t('ENABLE') }}</a> {{ vcp.t('To include a browser from registrations:') }} </p>
+    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-success">{{ vcp.t('ENABLE NOW') }}</a> {{ vcp.t('To include a browser from registrations:') }} </p>
     <div class="vw-bg-gray-100 vw-p-2"><code>{{ url }}</code></div>
 
     <p><span class="vw-text-xs">{{ vcp.t('Note: after visiting the block/unblock urls, you need to reload this page to view the right status') }}</span></p>

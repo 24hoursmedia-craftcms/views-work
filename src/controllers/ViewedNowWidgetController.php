@@ -31,11 +31,10 @@ class ViewedNowWidgetController extends Controller
         $after = DateTimeHelper::currentUTCDateTime();
         $after->modify('-' . (string)$seconds . ' seconds');
 
-        $query = Entry::find()->site('*');
-        $query = $facade->sortRecent($query, $after);
-
-        $total = $query->count();
+        $query = Entry::find()->site('*')->orderByRecentlyViewed($after);
         $query->limit($count);
+        $total = $query->count();
+
         $entries = $query->all();
 
         $viewModel = [

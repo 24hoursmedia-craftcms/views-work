@@ -1,7 +1,7 @@
 {% import 'views-work/_macros.twig' as vcp %}
 
 <div class="content-pane">
-    <h2>{{ vcp.t('Twig Integration') }}</h2>
+    <h2>{{ vcp.t('Quick start') }}</h2>
 
     <h3>{{ vcp.t('Measurement pixel') }}</h3>
     <p>
@@ -11,11 +11,12 @@
 
     <h3>{{ vcp.t('Showing popular items') }}</h3>
     <p>
-        {{ vcp.t('To show the 5 most popular items viewed today, you can do in twig:') }}
-    <pre class="vw-bg-gray-100 vw-p-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set query = craft.entries.limit(5) %}
-{% do craft.views_work.sortPopular(query, 'today', {min_views: 1}) %}
-{% set articles = query.all %}{% endverbatim %}</code></pre>
 
-    {{ vcp.t('Instead of `today`, you can also use `total`, `thisWeek` or `thisMonth`.') }}
+        {{ vcp.t('To retrieve the 5 most popular items viewed today, you can simply do in twig:') }}
+    <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('today', 1).limit(5).all %}{% endverbatim %}</code></pre>
+
+    {{ vcp.t('Instead of `today`, you can also use `total`, `thisWeek` or `thisMonth`:') }}
+    <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('total', 1).limit(5).all %}{% endverbatim %}</code></pre>
+    {{ vcp.t('(the number 1 is the minimum number of times viewed.)') }}
     </p>
 </div>
