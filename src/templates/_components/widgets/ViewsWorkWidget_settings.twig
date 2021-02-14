@@ -18,6 +18,14 @@
 {% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
 
 {{ forms.textField({
+    label: 'Widget title',
+    instructions: 'Title to display on the widget',
+    id: 'widgetTitle',
+    name: 'widgetTitle',
+    value: widget['widgetTitle']})
+}}
+
+{{ forms.textField({
     label: 'Number of items',
     instructions: 'Number of popular items to show',
     id: 'count',

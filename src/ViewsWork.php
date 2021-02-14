@@ -10,27 +10,30 @@
 
 namespace twentyfourhoursmedia\viewswork;
 
-
+use Craft;
+use craft\base\Plugin;
+use craft\events\PluginEvent;
+use craft\events\RegisterComponentTypesEvent;
+use craft\events\RegisterCpNavItemsEvent;
 use craft\events\RegisterUrlRulesEvent;
+use craft\services\Dashboard;
 use craft\services\Fields;
+use craft\services\Plugins;
+use craft\web\Request;
+use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
+use twentyfourhoursmedia\viewswork\models\Settings;
+use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
+use twentyfourhoursmedia\viewswork\services\addons\BlockCrawlersAddOn;
 use twentyfourhoursmedia\viewswork\services\Facade;
 use twentyfourhoursmedia\viewswork\services\RegistrationUrlService;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
 use twentyfourhoursmedia\viewswork\twigextensions\ViewsWorkTwigExtension;
-use twentyfourhoursmedia\viewswork\models\Settings;
+use twentyfourhoursmedia\viewswork\variables\ViewsWorkCpVariable;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkVariable;
 use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget as ViewsWorkWidgetWidget;
-use Craft;
-use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
-use craft\services\Dashboard;
-use craft\events\RegisterComponentTypesEvent;
-
-
 use yii\base\Event;
 
 /**
@@ -43,6 +46,8 @@ use yii\base\Event;
  * @property ViewsWorkService $viewsWorkService
  * @property Facade $viewsWork
  * @property RegistrationUrlService $registrationUrlService
+ * @property BlockByCookieAddOn $blockByCookieAddOn
+ * @property BlockCrawlersAddOn $blockCrawlersAddOn
  */
 class ViewsWork extends Plugin
 {
@@ -76,13 +81,13 @@ class ViewsWork extends Plugin
         $this->setComponents([
             'viewsWork' => Facade::class,
             'viewsWorkService' => ViewsWorkService::class,
-            'registrationUrlService' => RegistrationUrlService::class
+            'registrationUrlService' => RegistrationUrlService::class,
+            // some standard add ons
+            'blockByCookieAddOn' => BlockByCookieAddOn::class,
+            'blockCrawlersAddOn' => BlockCrawlersAddOn::class
         ]);
+
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
-
-        // validate the settings
-        $this->initSettings($this->getSettings());
-
 
         // Register our fields
         Event::on(
@@ -100,7 +105,13 @@ class ViewsWork extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('views_work', ViewsWorkVariable::class);
+
+                $request = Craft::$app->getRequest();
+                if ($request instanceof Request && $request->isCpRequest) {
+                    $variable->set('views_work_cp', ViewsWorkCpVariable::class);
+                } else {
+                    $variable->set('views_work', ViewsWorkVariable::class);
+                }
             }
         );
 
@@ -121,6 +132,39 @@ class ViewsWork extends Plugin
             }
         );
 
+        Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, static function (RegisterUrlRulesEvent $event) {
+            $event->rules['views-work'] = ['template' => 'views-work/cp/_index'];
+            $event->rules['views-work/block'] = ['template' => 'views-work/cp/block/_index'];
+        });
+
+        Event::on(
+            Cp::class,
+            Cp::EVENT_REGISTER_CP_NAV_ITEMS,
+            function (RegisterCpNavItemsEvent $event) {
+
+                $event->navItems['views-work'] = [
+                    'url' => 'views-work',
+                    'label' => 'Views Work',
+                    'icon' => '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist/img/ViewsWork-icon.svg',
+                    //'badgeCount' => 5,
+                    'subnav' => [
+                        'index' => ['label' => 'Overview', 'url' => 'views-work'],
+                        'block' => ['label' => 'Block registrations', 'url' => 'views-work/block'],
+                    ]
+                ];
+            }
+        );
+
+        Event::on(Settings::class, Settings::EVENT_BEFORE_VALIDATE, function (\yii\base\ModelEvent $event) {
+            $settings = $event->sender;
+            /* @var Settings $settings */
+            $settings->populateMissingSecrets();
+        });
+
+        // dispatch registration to default event listeners
+        $this->blockByCookieAddOn->setupListeners();
+        $this->blockCrawlersAddOn->setupListeners();
+
         Craft::info(
             Craft::t(
                 'views-work',
@@ -134,24 +178,13 @@ class ViewsWork extends Plugin
     // Protected Methods
     // =========================================================================
 
+
     /**
      * @inheritdoc
      */
     protected function createSettingsModel()
     {
-        $settings = new Settings();
-        $settings->signKey = Craft::$app->security->generateRandomString();
-        $settings->urlResetSecret = Craft::$app->security->generateRandomString();
-        return $settings;
-    }
-
-    /**
-     * Ensure there are some secret keys in settings saved
-     * @param Settings $settings
-     * @deprecated
-     */
-    protected function initSettings(Settings $settings) {
-
+        return new Settings();
     }
 
     /**

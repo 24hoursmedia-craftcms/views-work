@@ -7,18 +7,21 @@
 
 namespace twentyfourhoursmedia\viewswork\services;
 
-use Craft;
-use craft\elements\db\ElementQuery;
-use craft\elements\db\EntryQuery;
-use craft\elements\Entry;
 use craft\base\Element;
-use craft\models\Site;
+use craft\elements\db\EntryQuery;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
+/**
+ * Class Facade
+ * Available as front end
+ *
+ * @package twentyfourhoursmedia\viewswork\services
+ */
 class Facade
 {
+
 
     public function getRecording(Element $element, $site = null)
     {
@@ -30,7 +33,8 @@ class Facade
 
     const SORT_POPULAR_OPTS = ['min_views' => 0];
 
-    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS) {
+    public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS)
+    {
         $opts+=self::SORT_POPULAR_OPTS;
         $query->leftJoin(
             '{{%viewswork_viewrecording}} AS _vr',
@@ -55,5 +59,4 @@ class Facade
         }
         return $query;
     }
-
 }
