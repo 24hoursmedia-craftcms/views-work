@@ -2,9 +2,26 @@
 {% set title = 'Views Work' %}
 {% set selectedSubnavItem = 'index' %}
 
-{#
-{% block sidebar %}
-    TEST
-{% endblock %}
-#}
 
+{% block sidebar %}
+
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="vw-grid vw-grid-flow-row vw-grid-cols-2 vw-auto-rows-fr vw-gap-3">
+        <div>
+            {% include 'views-work/cp/_partials/integration.twig' %}
+        </div>
+        <div>
+            {% include 'views-work/cp/_partials/blocking.twig' %}
+        </div>
+        <div>
+            {% include 'views-work/cp/_partials/documentation.twig' %}
+        </div>
+
+    </div>
+
+
+{% endblock %}
