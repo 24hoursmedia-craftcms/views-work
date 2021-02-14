@@ -21,6 +21,10 @@ use twentyfourhoursmedia\viewswork\ViewsWork;
 class CpFacade extends Facade
 {
 
+    public function uniqid(string $prefix = 'uid_')
+    {
+        return uniqid($prefix, false);
+    }
     public function getCookieBlockUrl() : string
     {
         return ViewsWork::$plugin->blockByCookieAddOn->getBlockUrl();

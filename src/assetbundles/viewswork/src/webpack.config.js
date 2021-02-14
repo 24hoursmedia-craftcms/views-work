@@ -15,5 +15,10 @@ Encore
             config: './postcss.config.js',
         }
     })
-    .enableSingleRuntimeChunk();
+    .enableSingleRuntimeChunk()
+    // define the environment variables
+    .configureDefinePlugin(options => {
+        options['process.env'].SELECTOR_PREFIX = "'vw-'";
+    })
+;
 module.exports = Encore.getWebpackConfig();

@@ -89,23 +89,9 @@ class ViewedNowWidget extends Widget
     {
         Craft::$app->getView()->registerAssetBundle(ViewsWorkWidgetWidgetAsset::class);
 
-        $facade = ViewsWork::$plugin->viewsWork;
-
-
-        $after = DateTimeHelper::currentUTCDateTime();
-        $after->modify('-' . (int)$this->seconds . ' seconds');
-
-        $query = Entry::find()->site('*');
-        $query = $facade->sortRecent($query, $after);
-
-        $total = $query->count();
-        $query->limit($this->count);
-        $entries = $query->all();
-
         $viewModel = [
-            'total' => $total,
-            'items' => $entries,
-            'after' => $after
+            'seconds' => $this->seconds,
+            'count' => $this->count
         ];
 
         $html = Craft::$app->getView()->renderTemplate(

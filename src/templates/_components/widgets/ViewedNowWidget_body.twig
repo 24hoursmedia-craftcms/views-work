@@ -1,49 +1,27 @@
 {% import 'views-work/_macros' as cpmacros %}
 {% import _self as _macros %}
 {% do view.registerAssetBundle("twentyfourhoursmedia\\viewswork\\assetbundles\\viewswork\\ViewsWorkAsset") %}
+{% set container_id = craft.views_work_cp.uniqid('viewednow_container_') %}
+<div id="{{ container_id }}">
+
+    <div class="vw-load-indicator vw-absolute vw--top-8 vw-right-1">
+        <svg class="vw-spinner" fill="none" viewBox="0 0 24 24">
+            <circle class="vw-opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="vw-opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+    </div>
+
+    <div
+            class="vw-js-rx-refresh"
+            data-vw-rx-refresh-uri="{{ actionUrl('views-work/viewed-now-widget/content', {
+                count: count,
+                seconds: seconds
+            }) }}"
+            data-vw-rx-refresh-state-container="#{{ container_id }}"
+    >
+    </div>
 
 
-<div class="vw-pb-2">
-{% if total > 0 %}
-    <span class="vw-badge vw-badge-circle vw-badge-info">{{ total }}</span> {{ 'items being viewed.' | t('views-work') }}
-{% else %}
-    {{ 'No items being viewed.' | t('views-work') }}
-{% endif %}
 </div>
-
-
-{% if items | length > 0 %}
-<div class="vw-grid vw-grid-cols-12 vw-gap-1 vw-pb-2">
-    {% for item in items %}
-        {% set views = craft.views_work_cp.recording(item) %}
-        {# views \twentyfourhoursmedia\viewswork\models\ViewRecording #}
-        {% set url = item.cpEditUrl %}
-
-        <div class="vw-col-span-10">
-            {% if url is empty %}
-                <div class="vw-overflow-ellipsis vw-truncate"><span>{{ item.title }}</span></div>
-            {% else %}
-                <div class="vw-overflow-ellipsis vw-truncate">
-                    <a href="{{ url }}">{{ item.title }}</a>
-                </div>
-
-            {% endif %}
-        </div>
-        <div class="vw-col-span-2">
-            <div class="vw-ml-1 vw-text-right">
-                {% set url = item.url | trim %}
-                {% if not ('?' in url) %}
-                    {% set url = url ~ '?' %}
-                {% endif %}
-                {% set url = url ~ 'vw-skip-reg=1' %}
-                {% if url %}
-                    <a href="{{ url }}" target="_blank" data-icon="world"></a>
-                {% endif %}
-            </div>
-        </div>
-
-    {% endfor %}
-</div>
-{% endif %}
 
 {% include 'views-work/_partials/widget_footer.twig' %}
