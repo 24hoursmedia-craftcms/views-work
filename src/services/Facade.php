@@ -35,6 +35,14 @@ class Facade
 
     const SORT_POPULAR_OPTS = ['min_views' => 0];
 
+    /**
+     * @deprecated use entries.section().orderByPopular('total', 1).all instead
+     *
+     * @param EntryQuery $query
+     * @param string $by
+     * @param int[] $opts
+     * @return EntryQuery
+     */
     public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS) : EntryQuery
     {
         $opts+=self::SORT_POPULAR_OPTS;
@@ -65,6 +73,7 @@ class Facade
     /**
      * Sort items by most recently viewed
      *
+     * @deprecated use entries.section().orderByRecentlyViewed('-30 seconds').all instead
      * @param EntryQuery $query
      */
     public function sortRecent(EntryQuery $query, \DateTimeInterface $after) : EntryQuery

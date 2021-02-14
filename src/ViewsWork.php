@@ -12,6 +12,8 @@ namespace twentyfourhoursmedia\viewswork;
 
 use Craft;
 use craft\base\Plugin;
+use craft\elements\db\ElementQuery;
+use craft\events\DefineBehaviorsEvent;
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
@@ -23,6 +25,7 @@ use craft\web\Request;
 use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
+use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkElementQueryBehavior;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
@@ -36,7 +39,6 @@ use twentyfourhoursmedia\viewswork\variables\ViewsWorkCpVariable;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkVariable;
 use twentyfourhoursmedia\viewswork\widgets\ViewedNowWidget;
 use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget as ViewsWorkWidgetWidget;
-use Twig\Extension\StringLoaderExtension;
 use yii\base\Event;
 
 /**
@@ -167,6 +169,11 @@ class ViewsWork extends Plugin
             /* @var Settings $settings */
             $settings->populateMissingSecrets();
         });
+
+        Event::on(ElementQuery::class, ElementQuery::EVENT_DEFINE_BEHAVIORS, function (DefineBehaviorsEvent $event) {
+            $event->behaviors[] = ViewsWorkElementQueryBehavior::class;
+        });
+
 
         // dispatch registration to default event listeners
         $this->blockByCookieAddOn->setupListeners();
