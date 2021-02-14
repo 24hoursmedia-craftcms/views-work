@@ -11,14 +11,21 @@
 namespace twentyfourhoursmedia\viewswork;
 
 use Craft;
+use craft\base\Element;
 use craft\base\Plugin;
 use craft\elements\db\ElementQuery;
+use craft\elements\Entry;
 use craft\events\DefineBehaviorsEvent;
+use craft\events\DefineSourceSortOptionsEvent;
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterCpNavItemsEvent;
+use craft\events\RegisterElementDefaultTableAttributesEvent;
+use craft\events\RegisterElementSortOptionsEvent;
+use craft\events\RegisterElementTableAttributesEvent;
 use craft\events\RegisterUrlRulesEvent;
 use craft\services\Dashboard;
+use craft\services\ElementIndexes;
 use craft\services\Fields;
 use craft\services\Plugins;
 use craft\web\Request;
@@ -26,6 +33,7 @@ use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkElementQueryBehavior;
+use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkEntryBehavior;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
@@ -83,6 +91,8 @@ class ViewsWork extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        $experimental = $this->getSettings()->enableExperimentalFeatures;
 
         $this->setComponents([
             'viewsWork' => Facade::class,
@@ -143,7 +153,7 @@ class ViewsWork extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, static function (RegisterUrlRulesEvent $event) {
             $event->rules['views-work'] = ['template' => 'views-work/cp/_index'];
-           // $event->rules['views-work/block'] = ['template' => 'views-work/cp/block/_index'];
+            // $event->rules['views-work/block'] = ['template' => 'views-work/cp/block/_index'];
         });
 
         Event::on(
@@ -173,6 +183,63 @@ class ViewsWork extends Plugin
         Event::on(ElementQuery::class, ElementQuery::EVENT_DEFINE_BEHAVIORS, function (DefineBehaviorsEvent $event) {
             $event->behaviors[] = ViewsWorkElementQueryBehavior::class;
         });
+
+        Event::on(Entry::class, Element::EVENT_DEFINE_BEHAVIORS, function (DefineBehaviorsEvent $event) {
+            $event->behaviors[] = ViewsWorkEntryBehavior::class;
+        });
+
+/*
+        Event::on(
+            ElementIndexes::class,
+            ElementIndexes::EVENT_DEFINE_SOURCE_SORT_OPTIONS,
+            function (DefineSourceSortOptionsEvent $event) {
+
+                if ($event->elementType === Entry::class) {
+                    $event->sortOptions[] = [
+                        'label' => 'Test',
+                        'orderBy' => '_vr.viewsTotal DESC',
+                        'attribute' => '_vr.viewsTotal',
+                        'direction' => SORT_DESC
+                    ];
+                }
+
+            }
+        );
+*/
+
+
+
+        Event::on(
+            Entry::class,
+            Element::EVENT_REGISTER_SORT_OPTIONS,
+            static function (RegisterElementSortOptionsEvent $ev) {
+                $tblName = ViewsWorkElementQueryBehavior::getRecordingTableName();
+                $ev->sortOptions[] = [
+                    'label' => 'Total views',
+                    'orderBy' => $tblName . '.viewsTotal',
+                    'attribute' => $tblName . '.viewsTotal',
+                    'defaultDir' => 'desc'
+                ];
+                $ev->sortOptions[] = [
+                    'label' => 'Monthly views',
+                    'orderBy' => $tblName . '.viewsThisMonth',
+                    'attribute' => $tblName . '.viewsThisMonth',
+                    'defaultDir' => 'desc'
+                ];
+                $ev->sortOptions[] = [
+                    'label' => 'Weekly views',
+                    'orderBy' => $tblName . '.viewsThisWeek',
+                    'attribute' => $tblName . '.viewsThisWeek',
+                    'defaultDir' => 'desc'
+                ];
+                $ev->sortOptions[] = [
+                    'label' => 'Daily views',
+                    'orderBy' => $tblName . '.viewsToday',
+                    'attribute' => $tblName . '.viewsToday',
+                    'defaultDir' => 'desc'
+                ];
+            }
+        );
 
 
         // dispatch registration to default event listeners

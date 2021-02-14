@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace twentyfourhoursmedia\viewswork\behaviors;
 
+use craft\elements\db\EntryQuery;
 use craft\helpers\Db;
 use yii\base\Behavior;
 use craft\elements\db\ElementQuery;
@@ -18,8 +19,12 @@ class ViewsWorkElementQueryBehavior extends Behavior
 
     public const POPULAR_NONE = 'none';
     public const POPULAR_TOTAL = 'total';
-    public const POPULAR_THIS_WEEK = 'thisWeek';
-    public const POPULAR_THIS_MONTH = 'thisMonth';
+    public const POPULAR_THIS_WEEK = 'week';
+    public const POPULAR_THIS_MONTH = 'month';
+
+    public static function getRecordingTableName() : string {
+        return '___vr';
+    }
 
     private $orderPopularFirst = self::POPULAR_NONE;
     private $minViews = 1;
@@ -27,7 +32,6 @@ class ViewsWorkElementQueryBehavior extends Behavior
      * @var \DateTimeInterface | null
      */
     private $orderByRecentlyViewed = null;
-
 
 
     public function events()
@@ -44,7 +48,8 @@ class ViewsWorkElementQueryBehavior extends Behavior
         return $this->owner;
     }
 
-    public function orderByRecentlyViewed($after) {
+    public function orderByRecentlyViewed($after)
+    {
         $criterium = null;
         if (is_string($after)) {
             $criterium = new \DateTime($criterium);
@@ -58,14 +63,36 @@ class ViewsWorkElementQueryBehavior extends Behavior
 
     public function afterPrepare(): bool
     {
-        if (!$this->orderByRecentlyViewed && $this->orderPopularFirst === self::POPULAR_NONE) {
+        $tblName = self::getRecordingTableName();
+
+        $hasVrReference = false;
+        $orderBys = is_array($this->owner->orderBy) ? $this->owner->orderBy : [$this->owner->orderBy];
+        $keys = array_keys($orderBys);
+        foreach ($keys as $key) {
+            if (str_starts_with((string)$key, $tblName . '.')) {
+                $hasVrReference = true;
+            }
+        }
+
+
+        // exit;
+
+
+        if (!$hasVrReference && !$this->orderByRecentlyViewed && $this->orderPopularFirst === self::POPULAR_NONE) {
             return true;
         }
-        $query = $this->owner->subQuery;
+
+        $query = $this->owner->query;
+        $subQuery = $this->owner->subQuery;
         $query->leftJoin(
-            '{{%viewswork_viewrecording}} AS _vr',
-            'elements_sites.elementId=_vr.elementId AND elements_sites.siteId=_vr.siteId'
+            '{{%viewswork_viewrecording}} AS ' . $tblName,
+            'elements_sites.elementId=' . $tblName . '.elementId AND elements_sites.siteId=' . $tblName . '.siteId'
         );
+        $subQuery->leftJoin(
+            '{{%viewswork_viewrecording}} AS ' . $tblName,
+            'elements_sites.elementId=' . $tblName . '.elementId AND elements_sites.siteId=' . $tblName . '.siteId'
+        );
+
 
         // apply sorts
         static $popularSortFieldMap = [
@@ -75,20 +102,22 @@ class ViewsWorkElementQueryBehavior extends Behavior
             'day' => 'viewsToday',
         ];
         $popularSortField = $popularSortFieldMap[$this->orderPopularFirst] ?? null;
+
         if ($popularSortField) {
             $orderBy = $query->orderBy;
-            $query->orderBy('_vr.' . $popularSortField . ' DESC');
+            $query->orderBy($tblName . '.' . $popularSortField . ' DESC');
             $query->addOrderBy($orderBy);
             // limit min views
             if ($this->minViews > 0) {
-                $query->andWhere('_vr.' . $popularSortField . '>=' . $this->minViews);
+                $query->andWhere($tblName . '.' . $popularSortField . '>=' . $this->minViews);
             }
+            $this->owner->subQuery->orderBy = [];
         }
 
         if ($this->orderByRecentlyViewed instanceof \DateTimeInterface) {
-            $query->andWhere(Db::parseDateParam('_vr.dateUpdated', $this->orderByRecentlyViewed, '>='));
+            $query->andWhere(Db::parseDateParam($tblName . '.dateUpdated', $this->orderByRecentlyViewed, '>='));
             $orderBy = $query->orderBy;
-            $query->orderBy('_vr.dateUpdated DESC');
+            $query->orderBy($tblName . '.dateUpdated DESC');
             $query->addOrderBy($orderBy);
 
         }

@@ -13,9 +13,9 @@
     <p>
 
         {{ vcp.t('To retrieve the 5 most popular items viewed today, you can simply do in twig:') }}
-    <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('today', 1).limit(5).all %}{% endverbatim %}</code></pre>
+    <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('day', 1).limit(5).all %}{% endverbatim %}</code></pre>
 
-    {{ vcp.t('Instead of `today`, you can also use `total`, `thisWeek` or `thisMonth`:') }}
+    {{ vcp.t('Instead of `day`, you can also use `total`, `week` or `month`:') }}
     <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('total', 1).limit(5).all %}{% endverbatim %}</code></pre>
     {{ vcp.t('(the number 1 is the minimum number of times viewed.)') }}
     </p>

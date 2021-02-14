@@ -45,10 +45,14 @@ class Facade
      */
     public function sortPopular(EntryQuery $query, $by = 'total', $opts = self::SORT_POPULAR_OPTS) : EntryQuery
     {
+        $minViews = (int)$opts['min_views'];
+        $query->orderByPopular($by, $minViews);
+        return $query;
+
         $opts+=self::SORT_POPULAR_OPTS;
         $query->leftJoin(
-            '{{%viewswork_viewrecording}} AS _vr',
-            'elements_sites.elementId=_vr.elementId AND elements_sites.siteId=_vr.siteId'
+            '{{%viewswork_viewrecording}} AS _vr2',
+            'elements_sites.elementId=_vr2.elementId AND elements_sites.siteId=_vr2.siteId'
         );
         $sortFieldMap = [
             'total' => 'viewsTotal',
@@ -61,11 +65,11 @@ class Facade
             throw new \RuntimeException("Invalid sort field {$by} for popularity");
         }
         $orderBy = $query->orderBy;
-        $query->orderBy('_vr.' . $sortField . ' DESC');
+        $query->orderBy('_vr2.' . $sortField . ' DESC');
         $query->addOrderBy($orderBy);
         $minViews = (int)$opts['min_views'];
         if ($minViews > 0) {
-            $query->andWhere('_vr.' . $sortField . '>=' . (int)$opts['min_views']);
+            $query->andWhere('_vr2.' . $sortField . '>=' . (int)$opts['min_views']);
         }
         return $query;
     }
@@ -79,12 +83,12 @@ class Facade
     public function sortRecent(EntryQuery $query, \DateTimeInterface $after) : EntryQuery
     {
         $query->leftJoin(
-            '{{%viewswork_viewrecording}} AS _vr',
-            'elements_sites.elementId=_vr.elementId AND elements_sites.siteId=_vr.siteId'
+            '{{%viewswork_viewrecording}} AS _vr2',
+            'elements_sites.elementId=_vr2.elementId AND elements_sites.siteId=_vr2.siteId'
         );
-        $query->andWhere(Db::parseDateParam('_vr.dateUpdated', $after, '>='));
+        $query->andWhere(Db::parseDateParam('_vr2.dateUpdated', $after, '>='));
         $orderBy = $query->orderBy;
-        $query->orderBy('_vr.dateUpdated DESC');
+        $query->orderBy('_vr2.dateUpdated DESC');
         $query->addOrderBy($orderBy);
         return $query;
     }
