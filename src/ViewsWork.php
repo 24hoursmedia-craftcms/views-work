@@ -36,6 +36,7 @@ use twentyfourhoursmedia\viewswork\variables\ViewsWorkCpVariable;
 use twentyfourhoursmedia\viewswork\variables\ViewsWorkVariable;
 use twentyfourhoursmedia\viewswork\widgets\ViewedNowWidget;
 use twentyfourhoursmedia\viewswork\widgets\ViewsWorkWidget as ViewsWorkWidgetWidget;
+use Twig\Extension\StringLoaderExtension;
 use yii\base\Event;
 
 /**
@@ -93,6 +94,7 @@ class ViewsWork extends Plugin
 
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
 
+
         // Register our fields
         Event::on(
             Fields::class,
@@ -139,7 +141,7 @@ class ViewsWork extends Plugin
 
         Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, static function (RegisterUrlRulesEvent $event) {
             $event->rules['views-work'] = ['template' => 'views-work/cp/_index'];
-            $event->rules['views-work/block'] = ['template' => 'views-work/cp/block/_index'];
+           // $event->rules['views-work/block'] = ['template' => 'views-work/cp/block/_index'];
         });
 
         Event::on(
@@ -150,12 +152,12 @@ class ViewsWork extends Plugin
                 $event->navItems['views-work'] = [
                     'url' => 'views-work',
                     'label' => 'Views Work',
-                    'icon' => '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist/img/ViewsWork-icon.svg',
+                    'icon' => '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/dist/img/icon.svg',
                     //'badgeCount' => 5,
-                    'subnav' => [
-                        'index' => ['label' => 'Overview', 'url' => 'views-work'],
-                        'block' => ['label' => 'Block registrations', 'url' => 'views-work/block'],
-                    ]
+                    //'subnav' => [
+                    //    'index' => ['label' => 'Overview', 'url' => 'views-work'],
+                    //    'block' => ['label' => 'Block registrations', 'url' => 'views-work/block'],
+                    //]
                 ];
             }
         );

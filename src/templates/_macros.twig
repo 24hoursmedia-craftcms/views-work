@@ -1,0 +1,5 @@
+{%- macro t(text, replace = {}) %}{{ text | t('views-work') | replace(replace) }}{% endmacro -%}
+
+{% macro icon_arrow() %}<span data-icon="circlerarr"></span>{% endmacro %}
+{% macro icon_web() %}<span data-icon="world"></span>{% endmacro %}
+

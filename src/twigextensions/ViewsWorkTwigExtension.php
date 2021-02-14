@@ -16,16 +16,20 @@ use craft\helpers\UrlHelper;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
 use Craft;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\StringLoaderExtension;
 
 /**
  * @author    24hoursmedia
  * @package   ViewsWork
  * @since     1.0.0
  */
-class ViewsWorkTwigExtension extends \Twig_Extension
+class ViewsWorkTwigExtension extends AbstractExtension
 {
     // Public Methods
     // =========================================================================
+
+
 
     /**
      * @inheritdoc
