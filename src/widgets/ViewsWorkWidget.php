@@ -10,6 +10,7 @@
 
 namespace twentyfourhoursmedia\viewswork\widgets;
 
+use craft\elements\db\ElementQuery;
 use craft\elements\Entry;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 use twentyfourhoursmedia\viewswork\assetbundles\viewsworkwidgetwidget\ViewsWorkWidgetWidgetAsset;
@@ -47,10 +48,24 @@ class ViewsWorkWidget extends Widget
 
     public $widgetTitle = '';
 
-    // Static Methods
-    // =========================================================================
+    public $allSites = true;
 
+    /**
+     * @var int|null The site ID that the widget should pull entries from
+     */
+    public $siteId;
 
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ($this->siteId === null) {
+            $this->siteId = Craft::$app->getSites()->getCurrentSite()->id;
+        }
+    }
 
     public function getTitle() : string
     {
@@ -91,12 +106,14 @@ class ViewsWorkWidget extends Widget
             $rules,
             [
                 ['widgetTitle', 'string'],
-                ['count', 'integer'],
+                ['count', 'integer', 'integerOnly' => true],
                 ['count', 'default', 'value' => 5],
                 ['showTotal', 'boolean'],
                 ['showMonthly', 'boolean'],
                 ['showWeekly', 'boolean'],
                 ['showDaily', 'boolean'],
+                ['allSites', 'boolean'],
+                ['siteId', 'number', 'integerOnly' => true]
             ]
         );
         return $rules;
@@ -122,8 +139,6 @@ class ViewsWorkWidget extends Widget
     {
         Craft::$app->getView()->registerAssetBundle(ViewsWorkWidgetWidgetAsset::class);
 
-        $facade = ViewsWork::$plugin->viewsWork;
-
         $total = null;
         $monthly = null;
         $weekly = null;
@@ -133,19 +148,19 @@ class ViewsWorkWidget extends Widget
 
 
         if ($this->showTotal) {
-            $total = Entry::find()->site('*')->orderByPopular('total')->limit($this->count);
+            $total = $this->applySite(Entry::find()->orderByPopular('total')->limit($this->count));
             is_numeric($section) ? $total->sectionId($section) : $total->section($section);
         }
         if ($this->showMonthly) {
-            $monthly = Entry::find()->site('*')->orderByPopular('month')->limit($this->count);
+            $monthly = $this->applySite(Entry::find()->orderByPopular('month')->limit($this->count));
             is_numeric($section) ? $monthly->sectionId($section) : $monthly->section($section);
         }
         if ($this->showWeekly) {
-            $weekly = Entry::find()->site('*')->orderByPopular('week')->limit($this->count);
+            $weekly = $this->applySite(Entry::find()->orderByPopular('week')->limit($this->count));
             is_numeric($section) ? $weekly->sectionId($section) : $weekly->section($section);
         }
         if ($this->showDaily) {
-            $daily = Entry::find()->site('*')->orderByPopular('day')->limit($this->count);
+            $daily = $this->applySite(Entry::find()->orderByPopular('day')->limit($this->count));
             is_numeric($section) ? $daily->sectionId($section) : $daily->section($section);
         }
 
@@ -169,5 +184,17 @@ class ViewsWorkWidget extends Widget
         );
 
         return $html;
+    }
+
+    private function applySite(ElementQuery $query) : ElementQuery {
+        if ($this->allSites) {
+            $query->site('*');
+            return $query;
+        }
+        if (is_numeric($this->siteId)) {
+            $query->siteId($this->siteId);
+            return $query;
+        }
+        return $query;
     }
 }

@@ -104,21 +104,28 @@ class ViewsWorkElementQueryBehavior extends Behavior
         $popularSortField = $popularSortFieldMap[$this->orderPopularFirst] ?? null;
 
         if ($popularSortField) {
-            $orderBy = $query->orderBy;
-            $query->orderBy($tblName . '.' . $popularSortField . ' DESC');
-            $query->addOrderBy($orderBy);
+            $useQuery = $subQuery;
+            $otherQuery = $query;
+
+            $orderBy = $useQuery->orderBy;
+            $useQuery->orderBy($tblName . '.' . $popularSortField . ' DESC');
+            $useQuery->addOrderBy($orderBy);
             // limit min views
             if ($this->minViews > 0) {
-                $query->andWhere($tblName . '.' . $popularSortField . '>=' . $this->minViews);
+                $useQuery->andWhere($tblName . '.' . $popularSortField . '>=' . $this->minViews);
             }
-            $this->owner->subQuery->orderBy = [];
+            $otherQuery->orderBy = null;
         }
 
         if ($this->orderByRecentlyViewed instanceof \DateTimeInterface) {
-            $query->andWhere(Db::parseDateParam($tblName . '.dateUpdated', $this->orderByRecentlyViewed, '>='));
-            $orderBy = $query->orderBy;
-            $query->orderBy($tblName . '.dateUpdated DESC');
-            $query->addOrderBy($orderBy);
+            $useQuery = $subQuery;
+            $otherQuery = $query;
+
+            $useQuery->andWhere(Db::parseDateParam($tblName . '.dateUpdated', $this->orderByRecentlyViewed, '>='));
+            $orderBy = $useQuery->orderBy;
+            $useQuery->orderBy($tblName . '.dateUpdated DESC');
+            $useQuery->addOrderBy($orderBy);
+            $otherQuery->orderBy = [];
 
         }
 
