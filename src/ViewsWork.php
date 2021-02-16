@@ -37,6 +37,7 @@ use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkEntryBehavior;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
+use twentyfourhoursmedia\viewswork\services\addons\BlockByQueryParamAddOn;
 use twentyfourhoursmedia\viewswork\services\addons\BlockCrawlersAddOn;
 use twentyfourhoursmedia\viewswork\services\CpFacade;
 use twentyfourhoursmedia\viewswork\services\Facade;
@@ -62,6 +63,7 @@ use yii\base\Event;
  * @property RegistrationUrlService $registrationUrlService
  * @property BlockByCookieAddOn $blockByCookieAddOn
  * @property BlockCrawlersAddOn $blockCrawlersAddOn
+ * @property BlockByQueryParamAddOn $blockByQueryParamAddOn
  */
 class ViewsWork extends Plugin
 {
@@ -101,7 +103,8 @@ class ViewsWork extends Plugin
             'registrationUrlService' => RegistrationUrlService::class,
             // some standard add ons
             'blockByCookieAddOn' => BlockByCookieAddOn::class,
-            'blockCrawlersAddOn' => BlockCrawlersAddOn::class
+            'blockCrawlersAddOn' => BlockCrawlersAddOn::class,
+            'blockByQueryParamAddOn' => BlockByQueryParamAddOn::class
         ]);
 
         Craft::$app->view->registerTwigExtension(new ViewsWorkTwigExtension());
@@ -188,24 +191,6 @@ class ViewsWork extends Plugin
             $event->behaviors[] = ViewsWorkEntryBehavior::class;
         });
 
-/*
-        Event::on(
-            ElementIndexes::class,
-            ElementIndexes::EVENT_DEFINE_SOURCE_SORT_OPTIONS,
-            function (DefineSourceSortOptionsEvent $event) {
-
-                if ($event->elementType === Entry::class) {
-                    $event->sortOptions[] = [
-                        'label' => 'Test',
-                        'orderBy' => '_vr.viewsTotal DESC',
-                        'attribute' => '_vr.viewsTotal',
-                        'direction' => SORT_DESC
-                    ];
-                }
-
-            }
-        );
-*/
 
 
 
@@ -241,10 +226,11 @@ class ViewsWork extends Plugin
             }
         );
 
-
-        // dispatch registration to default event listeners
-        $this->blockByCookieAddOn->setupListeners();
-        $this->blockCrawlersAddOn->setupListeners();
+        // dispatch event registration to add ons
+        $addOns = [$this->blockByCookieAddOn,  $this->blockByQueryParamAddOn, $this->blockCrawlersAddOn];
+        foreach ($addOns as $addOn) {
+            $addOn->setupListeners();
+        }
 
         Craft::info(
             Craft::t(

@@ -57,6 +57,14 @@ class Settings extends Model
     public $blockByCookieSecret = '';
 
     /**
+     * Value for a query param
+     * used in urls to block/unblock view recordings for links
+     *
+     * @var string
+     */
+    public $blockByQueryParamSecret = '';
+
+    /**
      * @var bool
      */
     public $enableExperimentalFeatures = false;
@@ -78,6 +86,8 @@ class Settings extends Model
             ['allowUrlReset', 'boolean'],
             ['allowUrlResetGET', 'boolean'],
             ['urlResetSecret', 'string'],
+            ['blockByQueryParamSecret', 'string'],
+            ['blockByCookieSecret', 'string'],
             ['enableExperimentalFeatures', 'boolean'],
         ];
     }
@@ -87,9 +97,12 @@ class Settings extends Model
      *
      * @return bool
      */
-    public function requiresSecrets() : bool
+    public function requiresSecrets(): bool
     {
-        foreach ($this->getAttributes(['urlResetSecret', 'blockByCookieSecret', 'signKey']) as $k => $v) {
+        foreach (
+            $this->getAttributes(
+                ['urlResetSecret', 'blockByCookieSecret', 'signKey', 'blockByQueryParamSecret']
+            ) as $k => $v) {
             if (trim($v) === '') {
                 return true;
             }
@@ -100,7 +113,7 @@ class Settings extends Model
     public function populateMissingSecrets()
     {
 
-        foreach ($this->getAttributes(['urlResetSecret', 'blockByCookieSecret', 'signKey']) as $k => $v) {
+        foreach ($this->getAttributes(['urlResetSecret', 'blockByCookieSecret', 'signKey', 'blockByQueryParamSecret']) as $k => $v) {
             if (trim($v) === '') {
                 $this->{$k} = Craft::$app->security->generateRandomString();
             }

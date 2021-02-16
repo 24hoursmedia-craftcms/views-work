@@ -10,6 +10,7 @@ namespace twentyfourhoursmedia\viewswork\services;
 
 use Craft;
 use twentyfourhoursmedia\viewswork\models\Settings;
+use twentyfourhoursmedia\viewswork\services\addons\BlockByQueryParamAddOn;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
 /**
@@ -25,19 +26,32 @@ class CpFacade extends Facade
     {
         return uniqid($prefix, false);
     }
-    public function getCookieBlockUrl() : string
+
+    public function getCookieBlockUrl(): string
     {
         return ViewsWork::$plugin->blockByCookieAddOn->getBlockUrl();
     }
 
-    public function getCookieUnblockUrl() : string
+    public function getCookieUnblockUrl(): string
     {
         return ViewsWork::$plugin->blockByCookieAddOn->getUnblockUrl();
     }
 
-    public function getCookieBlockStatusUrl() : string
+    public function getCookieBlockStatusUrl(): string
     {
         return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl();
+    }
+
+    public function addBlockParamToUrl(?string $url): ?string
+    {
+        if (!$url) {
+            return null;
+        }
+        if (!str_contains($url, '?')) {
+            $url .= '?';
+        }
+        $url .= urlencode(BlockByQueryParamAddOn::$defaultParamName) . '=' . $this->getSettings()->blockByQueryParamSecret;
+        return $url;
     }
 
     /**
@@ -45,23 +59,23 @@ class CpFacade extends Facade
      *
      * @return bool
      */
-    public function settingsRequiresSecrets() : bool
+    public function settingsRequiresSecrets(): bool
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
         return $settings->requiresSecrets();
     }
 
-    public function getBlockStatus() : array
+    public function getBlockStatus(): array
     {
         return [
-            'blocked' =>   ViewsWork::$plugin->blockByCookieAddOn->isBlocked(
+            'blocked' => ViewsWork::$plugin->blockByCookieAddOn->isBlocked(
                 Craft::$app->getRequest()
             )
         ];
     }
 
-    public function getSettings() : Settings
+    public function getSettings(): Settings
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
