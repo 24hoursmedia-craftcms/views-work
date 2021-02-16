@@ -9,9 +9,8 @@
     </p>
     <pre class="vw-bg-gray-100 vw-p-2 vw-overflow-auto"><code>{% verbatim %}{{ entry | views_work_image }}{% endverbatim %}</code></pre>
 
-    <h3>{{ vcp.t('Showing popular items') }}</h3>
+    <h3>{{ vcp.t('Retrieving popular items') }}</h3>
     <p>
-
         {{ vcp.t('To retrieve the 5 most popular items viewed today, you can simply do in twig:') }}
     <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('day', 1).limit(5).all %}{% endverbatim %}</code></pre>
 
@@ -19,4 +18,11 @@
     <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{% set popularEntries = craft.entries.orderByPopular('total', 1).limit(5).all %}{% endverbatim %}</code></pre>
     {{ vcp.t('(the number 1 is the minimum number of times viewed.)') }}
     </p>
+
+    <h3>{{ vcp.t('Showing view counts for an element') }}</h3>
+    <pre class="vw-bg-gray-100 vw-p-2 vw-mt-2 vw-mb-2 vw-overflow-auto"><code>{% verbatim %}{{ entry.viewsWork.total }}
+{{ entry.viewsWork.thisMonth }}
+{{ entry.viewsWork.thisWeek }}
+{{ entry.viewsWork.today }}{% endverbatim %}</code></pre>
+
 </div>

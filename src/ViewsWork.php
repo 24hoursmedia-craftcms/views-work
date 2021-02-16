@@ -33,7 +33,7 @@ use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkElementQueryBehavior;
-use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkEntryBehavior;
+use twentyfourhoursmedia\viewswork\behaviors\ViewsWorkElementBehaviour;
 use twentyfourhoursmedia\viewswork\fields\ViewsWorkField;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByCookieAddOn;
@@ -187,11 +187,9 @@ class ViewsWork extends Plugin
             $event->behaviors[] = ViewsWorkElementQueryBehavior::class;
         });
 
-        Event::on(Entry::class, Element::EVENT_DEFINE_BEHAVIORS, function (DefineBehaviorsEvent $event) {
-            $event->behaviors[] = ViewsWorkEntryBehavior::class;
+        Event::on(Element::class, Element::EVENT_DEFINE_BEHAVIORS, function (DefineBehaviorsEvent $event) {
+            $event->behaviors[] = ViewsWorkElementBehaviour::class;
         });
-
-
 
 
         Event::on(
