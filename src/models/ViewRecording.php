@@ -6,9 +6,11 @@
  */
 
 namespace twentyfourhoursmedia\viewswork\models;
-use twentyfourhoursmedia\viewswork\records\ViewRecording as ViewRecordingRecord;
 
-class ViewRecording
+use twentyfourhoursmedia\viewswork\records\ViewRecording as ViewRecordingRecord;
+use yii\base\Model;
+
+class ViewRecording extends Model
 {
 
     public $total = 0;
@@ -21,11 +23,15 @@ class ViewRecording
 
     public static function createFromRecord(ViewRecordingRecord $recording) : self
     {
-        $me = new self();
-        $me->today = (int)$recording->getAttribute('viewsToday');
-        $me->total = (int)$recording->getAttribute('viewsTotal');
-        $me->thisMonth = (int)$recording->getAttribute('viewsThisMonth');
-        $me->thisWeek = (int)$recording->getAttribute('viewsThisWeek');
-        return $me;
+        return (new self())->populateFromRecord($recording);
+    }
+
+    public function populateFromRecord(ViewRecordingRecord $recording) : self
+    {
+        $this->today = (int)$recording->getAttribute('viewsToday');
+        $this->total = (int)$recording->getAttribute('viewsTotal');
+        $this->thisMonth = (int)$recording->getAttribute('viewsThisMonth');
+        $this->thisWeek = (int)$recording->getAttribute('viewsThisWeek');
+        return $this;
     }
 }
