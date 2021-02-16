@@ -11,6 +11,7 @@ use craft\base\Element;
 use craft\elements\db\EntryQuery;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Db;
+use twentyfourhoursmedia\viewswork\behaviors\IncrementableRecordingBehavior;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
 use twentyfourhoursmedia\viewswork\ViewsWork;
@@ -29,7 +30,9 @@ class Facade
     {
         $siteId = SiteIdHelper::determineSiteId($element, $site);
         $recording = ViewsWork::$plugin->viewsWorkService->getRecordingRecord($element, $siteId);
-        return ViewRecording::createFromRecord($recording);
+        $model = ViewRecording::createFromRecord($recording);
+        $model->attachBehavior('incremental', IncrementableRecordingBehavior::create($element));
+        return $model;
     }
 
 
