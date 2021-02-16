@@ -30,11 +30,8 @@
             <div class="vw-col-span-2">
                 <div class="vw-ml-1 vw-text-right">
                     {% set url = item.url | trim %}
-                    {% if not ('?' in url) %}
-                        {% set url = url ~ '?' %}
-                    {% endif %}
-                    {% set url = url ~ 'vw-skip-reg=1' %}
-                    {% if url %}
+                    {% if url is not empty %}
+                        {% set url = craft.views_work_cp.addBlockParamToUrl(url) %}
                         <a href="{{ url }}" target="_blank" data-icon="world"></a>
                     {% endif %}
                 </div>

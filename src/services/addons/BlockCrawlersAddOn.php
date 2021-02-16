@@ -20,7 +20,7 @@ use yii\base\Event;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
 use yii\web\Cookie;
 
-class BlockCrawlersAddOn
+class BlockCrawlersAddOn extends AbstractViewsWorkAddOn
 {
 
     /**
@@ -28,7 +28,7 @@ class BlockCrawlersAddOn
      */
     private $detector;
 
-    public function setupListeners()
+    public function setupListeners() : void
     {
         Event::on(
             ViewsWorkService::class,

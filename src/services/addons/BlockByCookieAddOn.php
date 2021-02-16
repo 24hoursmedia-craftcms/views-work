@@ -19,18 +19,18 @@ use yii\base\Event;
 use twentyfourhoursmedia\viewswork\services\ViewsWorkService;
 use yii\web\Cookie;
 
-class BlockByCookieAddOn
+class BlockByCookieAddOn extends AbstractViewsWorkAddOn
 {
 
     private $cookieName = 'vw_block_token';
 
-    public function setupListeners()
+    public function setupListeners() : void
     {
         Event::on(
             ViewsWorkService::class,
             ViewsWorkService::EVENT_BLOCK_ELEMENT_VIEW_REGISTRATION,
             function (BlockElementViewRegistrationEvent $event) {
-                $event->blocked = $this->isBlocked(Craft::$app->getRequest());
+                $event->blocked = $event->blocked || $this->isBlocked(Craft::$app->getRequest());
             }
         );
     }

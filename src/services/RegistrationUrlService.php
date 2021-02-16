@@ -15,6 +15,7 @@ use craft\helpers\DateTimeHelper;
 use craft\helpers\UrlHelper;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\records\ViewRecording;
+use twentyfourhoursmedia\viewswork\services\addons\BlockByQueryParamAddOn;
 use twentyfourhoursmedia\viewswork\ViewsWork;
 
 use Craft;
@@ -49,7 +50,8 @@ class RegistrationUrlService extends Component
         $query = [
             self::SIGNATURE_FIELD => sha1($this->getSigningKey() . $signedVal),
             self::SIGNED_PARAMS_FIELD => $signedVal,
-            self::CACHEBUSTER_FIELD => uniqid('cb')
+            self::CACHEBUSTER_FIELD => uniqid('cb'),
+            BlockByQueryParamAddOn::$defaultParamName => Craft::$app->getRequest()->getQueryParam(BlockByQueryParamAddOn::$defaultParamName)
         ];
         return UrlHelper::actionUrl('views-work/register-view/beacon-image', $query);
     }
