@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace twentyfourhoursmedia\viewswork\services;
 
 use Craft;
+use craft\helpers\UrlHelper;
 use twentyfourhoursmedia\viewswork\models\Settings;
 use twentyfourhoursmedia\viewswork\services\addons\BlockByQueryParamAddOn;
 use twentyfourhoursmedia\viewswork\ViewsWork;
@@ -40,6 +41,14 @@ class CpFacade extends Facade
     public function getCookieBlockStatusUrl(): string
     {
         return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl();
+    }
+
+    public function getResetUrl() : ?string
+    {
+        if (!$this->getSettings()->allowUrlReset) {
+            return null;
+        }
+        return UrlHelper::siteUrl('actions/views-work/reset/reset', ['key' => $this->getSettings()->urlResetSecret]);
     }
 
     public function addBlockParamToUrl(?string $url): ?string

@@ -1,0 +1,13 @@
+{% if craft.views_work_cp.settings.allowUrlReset %}
+    {% import 'views-work/_macros.twig' as vcp %}
+    {% set settings = craft.views_work_cp.settings %}
+    <div class="content-pane vw-mt-3">
+    <h2>{{ vcp.t('Reset URL') }}</h2>
+    <p>{{ vcp.t('You should reset the periodic view counters either with a cron job (view the docs), or with a special url using a service like cronify.com.') }}</p>
+    <p>{{ vcp.t('The reset url is:') }}</p>
+    <div class="vw-bg-gray-100 vw-p-2"><code>
+            {{ settings.allowUrlResetGET ? 'GET or POST' : 'POST' }}<br/>
+            {{ craft.views_work_cp.resetUrl }}
+        </code>
+    </div>
+{% endif %}

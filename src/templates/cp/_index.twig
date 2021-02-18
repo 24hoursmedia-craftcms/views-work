@@ -12,22 +12,13 @@
 
     <div class="vw-grid vw-grid-flow-row vw-grid-cols-2 vw-auto-rows-fr vw-gap-3">
         <div>
-            {% include 'views-work/cp/_partials/integration.twig' %}
-            <div class="vw-mt-3">
-                {% include 'views-work/cp/_partials/documentation.twig' %}
-            </div>
+            {% include 'views-work/cp/_partials/dashboard/integration.twig' %}
+            {% include 'views-work/cp/_partials/dashboard/documentation.twig' %}
         </div>
         <div>
-            {% include 'views-work/cp/_partials/widgets.twig' %}
-            <div class="vw-mt-3">
-                {% include 'views-work/cp/_partials/blocking.twig' %}
-            </div>
-        </div>
-        <div>
-
-        </div>
-        <div>
-
+            {% include 'views-work/cp/_partials/dashboard/widgets.twig' %}
+            {% include 'views-work/cp/_partials/dashboard/blocking.twig' %}
+            {% include 'views-work/cp/_partials/dashboard/reset_url.twig' %}
         </div>
     </div>
 
