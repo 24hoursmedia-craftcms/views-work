@@ -10,13 +10,16 @@
 
 namespace twentyfourhoursmedia\viewswork\services;
 
-use Craft;
-use craft\base\Component;
 use craft\base\Element;
+
+use craft\base\ElementInterface;
 use craft\helpers\DateTimeHelper;
-use twentyfourhoursmedia\viewswork\events\BlockElementViewRegistrationEvent;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\records\ViewRecording;
+use twentyfourhoursmedia\viewswork\ViewsWork;
+
+use Craft;
+use craft\base\Component;
 
 /**
  * @author    24hoursmedia
@@ -25,10 +28,6 @@ use twentyfourhoursmedia\viewswork\records\ViewRecording;
  */
 class ViewsWorkService extends Component
 {
-
-
-    public const EVENT_BLOCK_ELEMENT_VIEW_REGISTRATION = 'blockElementViewRegistration';
-
     // Public Methods
     // =========================================================================
 
@@ -66,17 +65,8 @@ class ViewsWorkService extends Component
         return $record;
     }
 
-    public function recordView(Element $element, $site = null, float $factor = 1) : bool
+    public function recordView(Element $element, $site = null, float $factor = 1)
     {
-        $event = new BlockElementViewRegistrationEvent();
-        $event->element = $element;
-        $event->site = $site;
-        $this->trigger(self::EVENT_BLOCK_ELEMENT_VIEW_REGISTRATION, $event);
-
-        if ($event->blocked) {
-            return false;
-        }
-
         $siteId = SiteIdHelper::determineSiteId($element, $site);
         $transaction = Craft::$app->getDb()->beginTransaction();
         $recording = $this->getRecordingRecord($element, $siteId);
@@ -87,7 +77,6 @@ class ViewsWorkService extends Component
         $recording->setAttribute('viewsThisWeek', $recording->getAttribute('viewsThisWeek') + $inc);
         $recording->save();
         $transaction->commit();
-        return true;
     }
 
 
