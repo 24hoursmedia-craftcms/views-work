@@ -107,7 +107,7 @@ class BlockByCookieAddOn extends AbstractViewsWorkAddOn
     }
 
 
-    public function getBlockUrl() : string
+    public function getBlockUrl(?int $siteId = null) : string
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
