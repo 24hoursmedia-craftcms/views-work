@@ -1,4 +1,4 @@
-# Views Work plugin for Craft CMS 3.x
+# Views Work plugin for Craft CMS >= 3.6.5
 
 ---
 Please view the full documentation at [io.24hoursmedia.com](https://io.24hoursmedia.com/views-work)!
@@ -9,8 +9,6 @@ Please view the full documentation at [io.24hoursmedia.com](https://io.24hoursme
 * View popular entries in a widget
 * Get popular entries and pageviews on the front-end in twig
 * Uses a signed tracking image to register only real page views
-
-
 
 ## Usage
 
