@@ -50,8 +50,8 @@ The cron checks wether it is the first day of the week or month before resetting
 
 ![views-work-dashboard.png](resources/img/views-work-dashboard.png)
 
-![settings-screen-v1.3.png](resources/img/settings-screen-v1.3.png)  
-png)
+![settings-screen-v1.3.png](resources/img/settings-screen-v1.3.png)
+
 ![views-work-widgets.png](resources/img/views-work-widgets.png)
 
 ----
