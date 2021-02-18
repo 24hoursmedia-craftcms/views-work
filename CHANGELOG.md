@@ -8,9 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Improved the dashboard for safari browsers
 
+## [1.3.0.6] - 2021-02-18
+### Changed
+- Minor changes and improvements
+
 ## [1.3.0.5] - 2021-02-18
 ### Changed
-- Minor changes
+- Minor changes and improvements
 
 ## [1.3.0.2] - 2021-02-18
 ### Changed
