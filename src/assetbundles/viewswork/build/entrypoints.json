@@ -1,0 +1,13 @@
+{
+  "entrypoints": {
+    "viewswork": {
+      "js": [
+        "/runtime.js",
+        "/viewswork.js"
+      ],
+      "css": [
+        "/viewswork.css"
+      ]
+    }
+  }
+}
