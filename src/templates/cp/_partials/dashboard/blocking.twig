@@ -28,11 +28,11 @@
             <div>
                 {{ site.name }}
             </div>
-            <div class="vw-pb-1">
-                <input type="text" value="{{ block_url }}" onfocus="this.select();" readonly="readonly">
+            <div class="vw-pb-1 vw-pr-3">
+                <input type="text" value="{{ block_url }}" class="vw-w-full vw-border vw-border-opacity-50 vw-border-solid vw-border-info" onclick="this.select();" readonly="readonly">
             </div>
-            <div class="vw-pb-1">
-                <input type="text" value="{{ unblock_url }}" onfocus="this.select();" readonly="readonly">
+            <div class="vw-pb-1 vw-pr-3">
+                <input type="text" value="{{ unblock_url }}" class="vw-w-full vw-border vw-border-opacity-50 vw-border-solid vw-border-info" onclick="this.select();" readonly="readonly">
             </div>
             <div>
                 <a href="{{ block_url }}" target="_blank"
