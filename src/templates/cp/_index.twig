@@ -10,6 +10,20 @@
 
 {% block main %}
 
+    {% if craft.views_work_cp.licenseIssue %}
+        {% import 'views-work/_macros.twig' as vcp %}
+        <div class="vw-alert vw-alert-danger vw-mb-4">
+            <p>
+            <strong>⚠ {{ vcp.t('Please help support the development of this plugin by acquiring a valid license.') }}</strong>
+            {{ vcp.t('There\'s a lot of work in maintaining and developing a Craft plugin, and we\'d love to be able to add more features.') }}
+            </p>
+
+            <a href="{{ craft.views_work_cp.buyLicenseUrl }}" class="vw-underline">{{ vcp.t('Acquire a valid license now') }}</a> {{ vcp.icon_arrow() }}.
+            {{ vcp.t('These messages will disappear with a valid license.') }}.
+        </div>
+    {% endif %}
+
+
     <div class="vw-grid vw-grid-flow-row vw-grid-cols-2 vw-auto-rows-fr vw-gap-3">
         <div>
             {% include 'views-work/cp/_partials/dashboard/integration.twig' %}

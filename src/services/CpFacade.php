@@ -91,4 +91,21 @@ class CpFacade extends Facade
         /* @var Settings $settings */
         return $settings;
     }
+
+    public function hasLicenseIssue() : bool
+    {
+        static $licenseIssue = null;
+        if (null !== $licenseIssue) {
+            return $licenseIssue;
+        }
+        $info = Craft::$app->plugins->getPluginInfo('views-work');
+
+        $licenseIssue = in_array('no_trials', $info['licenseIssues'] ?? [], true);
+        return $licenseIssue;
+    }
+
+    public function buyLicenseUrl() : string
+    {
+        return UrlHelper::cpUrl('plugin-store/buy/views-work/standard');
+    }
 }

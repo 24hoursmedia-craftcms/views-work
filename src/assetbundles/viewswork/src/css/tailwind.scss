@@ -9,6 +9,19 @@ https://tailwindcss.com/docs/customizing-colors
 */
 
 .vw-alert {
+  @apply vw-p-2 vw-rounded vw-mt-2 vw-mb-2
+}
+
+.vw-alert {
+
+  &-danger {
+    @apply vw-bg-danger vw-text-white
+  }
+
+  &-danger a {
+    @apply vw-text-white
+  }
+
   &-warning {
     @apply vw-bg-warning vw-text-white
   }

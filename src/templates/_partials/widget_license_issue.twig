@@ -1,0 +1,7 @@
+{% if craft.views_work_cp.licenseIssue %}
+    {% import 'views-work/_macros.twig' as vcp %}
+    <div class="vw-alert vw-alert-danger vw-text-xs vw-mb-4">
+        ⚠ {{ vcp.t('Please help support the development of this plugin by acquiring a valid license.') }}
+        <a href="{{ craft.views_work_cp.buyLicenseUrl }}" class="vw-underline">{{ vcp.t('Acquire now') }}</a> {{ vcp.icon_arrow() }}.
+    </div>
+{% endif %}
