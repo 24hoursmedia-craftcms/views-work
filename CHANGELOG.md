@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2021-02-18
+### Added
+* A new widget that shows content that is being currently viewed
+* Exclude your own pageview registrations with a cookie
+* Block bots from registrations
+* Sort entries directly in the control panel by popularity with the sort drop down
+* A dedicated Views Work dashboard with help to get you quickly get started
+* Reset view counters daily with a free service like cronify.com instead of cron jobs
+* Simplified twig programming api to retrieve popular content
+* Programmatically increase view counters
+
 ## [1.2.6] - 2021-02-10
 ### Added
 - Optionally allow GET requests to the reset url to allow easycron free service plan
