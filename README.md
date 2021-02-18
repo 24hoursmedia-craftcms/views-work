@@ -23,37 +23,19 @@ Show a beacon 1px x 1px image to register a pageview:
 
 Get popular items:
 ```
-{% set query = craft.entries.section('..').limit(5) %}
-{% do craft.views_work.sortPopular(query) %}
-{% set entries = query.all %}
+{% set entries = craft.entries.section('articles').orderByPopular('week', 1).limit(10) %} %}
 
-# sort popular items by week, monthly or daily views
-{% do craft.views_work.sortPopular(query, 'total') %}
-{% do craft.views_work.sortPopular(query, 'week') %}
-{% do craft.views_work.sortPopular(query, 'month') %}
-{% do craft.views_work.sortPopular(query, 'day') %}
+{# show this weeks views (also supported: today, thisMonth, total) #}
+{{ entries.viewsWork.thisWeek }}
 
-# exclude items with 0 views
-{% do craft.views_work.sortPopular(query, 'week', {min_views: 1}) %}
-
-# only deliver items with more than 100 views
-{% do craft.views_work.sortPopular(query, 'week', {min_views: 100}) %}
-```
-
-Show views for an entry:
-
-```twig
-{{ craft.views_work.recording(entry).total }}
-{{ craft.views_work.recording(entry).thisMonth }}
-{{ craft.views_work.recording(entry).thisWeek }}
-{{ craft.views_work.recording(entry).today }}
 ```
 
 ## Resetting view counters
 
 Some view counters need to be periodically reset (such as the daily and
 weekly counters). You can either do this with a special url
-(provided in the control panel), or by setting up a cron job.
+(provided in the control panel), or by setting up a cron job or using a
+special url.
 
 ### Resetting views with a cron job
 
