@@ -44,6 +44,16 @@ The cron checks wether it is the first day of the week or month before resetting
 
     ./craft views-work/default/reset-views
 
+
+
+### Screenshots
+
+![views-work-dashboard.png](resources/img/views-work-dashboard.png)
+
+![settings-screen-v1.3.png](resources/img/settings-screen-v1.3.png)  
+png)
+![views-work-widgets.png](resources/img/views-work-widgets.png)
+
 ----
 
 Brought to you by [24hoursmedia](https://www.24hoursmedia.com)
