@@ -4,21 +4,47 @@
 <div class="content-pane vw-mt-3">
     <h2>{{ vcp.t('Block registrations') }}</h2>
 
-    {% if status.blocked %}
-        <span class="vw-badge vw-badge-secondary">{{ 'REGISTRATION FOR THIS BROWSER: OFF' | t('views_work') }}</span>
-    {% else %}
-        <span class="vw-badge vw-badge-success">{{ 'REGISTRATION FOR THIS BROWSER: ON' | t('views_work') }}</span>
-    {% endif %}
+    <p>{{ vcp.t('To exclude yourself or others from view registrations, you can visit one of the following links. You need to enable/disable blocking on a per domain basis.') }}</p>
 
-    <p>{{ vcp.t('To exclude yourself or others from view registrations, you can visit one of the following links.') }}</p>
 
-    {% set url = craft.views_work_cp.cookieBlockUrl %}
-    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-danger">{{ vcp.t('DISABLE NOW') }}</a> {{ vcp.t('To exclude a browser from registrations:') }}</p>
-    <div class="vw-bg-gray-100 vw-p-2"><code>{{ url }}</code></div>
+    {% set sites = craft.app.sites.allSites %}
+    <div class="vw-grid vw-grid-cols-5 vw-gap-1">
+        <div>
+            <strong>{{ vcp.t('Site') }}</strong>
+        </div>
+        <div>
+            <strong>{{ vcp.t('Disable registration url') }}</strong>
+        </div>
+        <div>
+            <strong>{{ vcp.t('Re-enable url') }}</strong>
+        </div>
+        <div></div>
+        <div></div>
 
-    {% set url = craft.views_work_cp.cookieUnblockUrl %}
-    <p><a href="{{ url }}" target="_blank" class="vw-badge vw-badge-success">{{ vcp.t('ENABLE NOW') }}</a> {{ vcp.t('To include a browser from registrations:') }} </p>
-    <div class="vw-bg-gray-100 vw-p-2"><code>{{ url }}</code></div>
+        {% for site in sites %}
+            {% set block_url = craft.views_work_cp.cookieblockUrl(site.id) %}
+            {% set unblock_url = craft.views_work_cp.cookieUnblockUrl(site.id) %}
+            {% set status_url = craft.views_work_cp.cookieBlockStatusUrl(site.id) %}
+            <div>
+                {{ site.name }}
+            </div>
+            <div class="vw-pb-1">
+                <input type="text" value="{{ block_url }}" onfocus="this.select();" readonly="readonly">
+            </div>
+            <div class="vw-pb-1">
+                <input type="text" value="{{ unblock_url }}" onfocus="this.select();" readonly="readonly">
+            </div>
+            <div>
+                <a href="{{ block_url }}" target="_blank"
+                   class="vw-badge vw-badge-danger">{{ vcp.t('DISABLE REG. NOW') }}</a>
+            </div>
+            <div>
+                <a href="{{ status_url }}" target="vw_blk"  class="vw-badge vw-badge-info">{{ vcp.t('status') }}</a>
+            </div>
+        {% endfor %}
+    </div>
 
-    <p><span class="vw-text-xs">{{ vcp.t('Note: after visiting the block/unblock urls, you need to reload this page to view the right status') }}</span></p>
+    <p>
+        <span class="vw-text-xs">{{ vcp.t('Note: after visiting the block/unblock urls, you need to reload this page to view the right status') }}</span>
+    </p>
 </div>

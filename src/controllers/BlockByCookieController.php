@@ -32,7 +32,10 @@ class BlockByCookieController extends Controller
         if ($desc) {
             $content .= PHP_EOL . 'TTL: ' . $desc['expire_str'];
         }
-        $response->content = $content;
+
+        $hostPfx = 'For host: ' . \Craft::$app->request->hostName;
+
+        $response->content = $hostPfx . ' - ' . $content;
         return $response;
     }
 
@@ -50,7 +53,10 @@ class BlockByCookieController extends Controller
         $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
         $response->format = $response::FORMAT_RAW;
         $response->headers->set('Content-Type', 'text/plain');
-        $response->content = $success ? 'View registrations are now blocked.' : 'Warning - some error occurred. Did you supply the right key?';
+
+        $hostPfx = 'For host: ' . \Craft::$app->request->hostName;
+
+        $response->content = $success ? $hostPfx. ' -  View registrations are now blocked.' : $hostPfx. ' -  Warning - some error occurred. Did you supply the right key?';
         return $response;
     }
 
@@ -63,12 +69,16 @@ class BlockByCookieController extends Controller
      */
     public function actionUnblock(string $key): Response
     {
+
         $success = ViewsWork::$plugin->blockByCookieAddOn->unBlock($key);
         $response = \Craft::$app->getResponse();
         $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
         $response->format = $response::FORMAT_RAW;
         $response->headers->set('Content-Type', 'text/plain');
-        $response->content = $success ? 'Views will now be registered.' : 'Warning - some error occurred. Did you supply the right key?';
+
+        $hostPfx = 'For host: ' . \Craft::$app->request->hostName;
+
+        $response->content = $success ? $hostPfx. ' -  Views will now be registered.' : $hostPfx. ' -  Warning - some error occurred. Did you supply the right key?';
         return $response;
     }
 

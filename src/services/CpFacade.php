@@ -16,8 +16,9 @@ use twentyfourhoursmedia\viewswork\ViewsWork;
 
 /**
  * Class CpFacade
- * Facade exposed in twig in the CP
+ * Facade exposed in twig in the CP, don't use in your front ends!
  *
+ * @internal
  * @package twentyfourhoursmedia\viewswork\services
  */
 class CpFacade extends Facade
@@ -28,22 +29,22 @@ class CpFacade extends Facade
         return uniqid($prefix, false);
     }
 
-    public function getCookieBlockUrl(): string
+    public function getCookieBlockUrl(?int $siteId = null): string
     {
-        return ViewsWork::$plugin->blockByCookieAddOn->getBlockUrl();
+        return ViewsWork::$plugin->blockByCookieAddOn->getBlockUrl($siteId);
     }
 
-    public function getCookieUnblockUrl(): string
+    public function getCookieUnblockUrl(?int $siteId = null): string
     {
-        return ViewsWork::$plugin->blockByCookieAddOn->getUnblockUrl();
+        return ViewsWork::$plugin->blockByCookieAddOn->getUnblockUrl($siteId);
     }
 
-    public function getCookieBlockStatusUrl(): string
+    public function getCookieBlockStatusUrl(?int $siteId = null): string
     {
-        return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl();
+        return ViewsWork::$plugin->blockByCookieAddOn->getStatusUrl($siteId);
     }
 
-    public function getResetUrl() : ?string
+    public function getResetUrl(): ?string
     {
         if (!$this->getSettings()->allowUrlReset) {
             return null;

@@ -99,11 +99,11 @@ class BlockByCookieAddOn extends AbstractViewsWorkAddOn
         return true;
     }
 
-    public function getStatusUrl() : string
+    public function getStatusUrl(?int $siteId = null) : string
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
-        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/status');
+        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/status', null, null, $siteId);
     }
 
 
@@ -111,14 +111,24 @@ class BlockByCookieAddOn extends AbstractViewsWorkAddOn
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
-        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/block', ['key' => $settings->blockByCookieSecret]);
+        return UrlHelper::siteUrl(
+            'actions/views-work/block-by-cookie/block',
+            ['key' => $settings->blockByCookieSecret],
+            null,
+            $siteId
+        );
     }
 
-    public function getUnblockUrl() : string
+    public function getUnblockUrl(?int $siteId = null) : string
     {
         $settings = ViewsWork::$plugin->getSettings();
         /* @var Settings $settings */
-        return UrlHelper::siteUrl('actions/views-work/block-by-cookie/unblock', ['key' => $settings->blockByCookieSecret]);
+        return UrlHelper::siteUrl(
+            'actions/views-work/block-by-cookie/unblock',
+            ['key' => $settings->blockByCookieSecret],
+            null,
+            $siteId
+        );
     }
 
     private static function secondsToTime($seconds)
