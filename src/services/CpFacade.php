@@ -100,7 +100,10 @@ class CpFacade extends Facade
         }
         $info = Craft::$app->plugins->getPluginInfo('views-work');
 
-        $licenseIssue = in_array('no_trials', $info['licenseIssues'] ?? [], true);
+        $licenseIssue =
+            in_array('no_trials', $info['licenseIssues'] ?? [], true) ||
+            in_array('invalid', $info['licenseIssues'] ?? [], true)
+        ;
         return $licenseIssue;
     }
 
