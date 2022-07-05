@@ -17,7 +17,7 @@ use twentyfourhoursmedia\viewswork\ViewsWork;
 
 class ViewedNowWidgetController extends Controller
 {
-    protected $allowAnonymous = self::ALLOW_ANONYMOUS_NEVER;
+    protected  array|bool|int $allowAnonymous = self::ALLOW_ANONYMOUS_NEVER;
 
     public function actionContent()
     {

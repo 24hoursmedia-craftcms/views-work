@@ -18,6 +18,7 @@ use twentyfourhoursmedia\viewswork\ViewsWork;
 use Craft;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\StringLoaderExtension;
+use Twig\TwigFilter;
 
 /**
  * @author    24hoursmedia
@@ -45,7 +46,7 @@ class ViewsWorkTwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('views_work_image', [$this, 'viewsWorkImage'], ['is_safe' => ['html']]),
+            new TwigFilter('views_work_image', [$this, 'viewsWorkImage'], ['is_safe' => ['html']]),
         ];
     }
 

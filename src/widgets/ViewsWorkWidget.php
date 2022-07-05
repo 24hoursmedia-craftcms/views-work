@@ -58,7 +58,7 @@ class ViewsWorkWidget extends Widget
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -88,7 +88,7 @@ class ViewsWorkWidget extends Widget
     /**
      * @inheritdoc
      */
-    public static function maxColspan()
+    public static function maxColspan(): ?int
     {
         return null;
     }
@@ -99,7 +99,7 @@ class ViewsWorkWidget extends Widget
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge(
@@ -122,7 +122,7 @@ class ViewsWorkWidget extends Widget
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate(
             'views-work/_components/widgets/ViewsWorkWidget_settings',
@@ -135,7 +135,7 @@ class ViewsWorkWidget extends Widget
     /**
      * @inheritdoc
      */
-    public function getBodyHtml()
+    public function getBodyHtml(): ?string
     {
         Craft::$app->getView()->registerAssetBundle(ViewsWorkWidgetWidgetAsset::class);
 

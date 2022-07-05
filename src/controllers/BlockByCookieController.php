@@ -16,7 +16,7 @@ class BlockByCookieController extends Controller
 {
 
     public $enableCsrfValidation = false;
-    protected $allowAnonymous = self::ALLOW_ANONYMOUS_LIVE;
+    protected  array|bool|int $allowAnonymous = self::ALLOW_ANONYMOUS_LIVE;
 
     public function actionStatus(): Response
     {
