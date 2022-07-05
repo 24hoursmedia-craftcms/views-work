@@ -1,4 +1,6 @@
-# Views Work plugin for Craft CMS >= 3.6.5
+# Views Work plugin for Craft CMS >= 4.x
+
+Views work 2.x is compatible with Craft CMS version 4.0 or higher.
 
 ---
 Please view the full documentation at [io.24hoursmedia.com](https://io.24hoursmedia.com/views-work)!
