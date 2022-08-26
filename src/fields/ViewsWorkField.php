@@ -41,7 +41,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
     // =========================================================================
 
 
-    public $searchable = false;
+    public bool $searchable = false;
 
     // Static Methods
     // =========================================================================
@@ -85,7 +85,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, [
@@ -108,7 +108,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
      *
      * @return mixed The prepared field value
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
     {
         if ($element) {
             return $this->getRecord($element);
@@ -219,7 +219,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
      * @throws \Twig\Error\SyntaxError
      * @throws \yii\base\Exception
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
