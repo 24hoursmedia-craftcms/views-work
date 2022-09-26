@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1.0] - 2022-09-26
+### Fixed
+- Craft 4 compatibility fix with many thanks to Wiejeben in https://github.com/24hoursmedia-craftcms/views-work/pull/91
+
 ## [1.3.0.7] - 2021-02-18
 ### Changed
 - Minor changes and improvements
