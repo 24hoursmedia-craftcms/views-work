@@ -59,7 +59,7 @@ class RegistrationUrlService extends Component
 
     public function verifySignedParams(array $queryParams) : array
     {
-        $signature = $queryParams[self::SIGNATURE_FIELD];
+        $signature = $queryParams[self::SIGNATURE_FIELD] ?? '';
         $expectedSignature = sha1($this->getSigningKey() . $queryParams[self::SIGNED_PARAMS_FIELD]);
         if ($expectedSignature !== $signature) {
             throw new BadRequestHttpException('Invalid signature');
