@@ -55,7 +55,7 @@ class Facade
         $opts+=self::SORT_POPULAR_OPTS;
         $query->leftJoin(
             '{{%viewswork_viewrecording}} AS _vr2',
-            'elements_sites.elementId=_vr2.elementId AND elements_sites.siteId=_vr2.siteId'
+            '[[elements_sites.elementId]]=[[_vr2.elementId]] AND [[elements_sites.siteId]]=[[_vr2.siteId]]'
         );
         $sortFieldMap = [
             'total' => 'viewsTotal',
@@ -72,7 +72,7 @@ class Facade
         $query->addOrderBy($orderBy);
         $minViews = (int)$opts['min_views'];
         if ($minViews > 0) {
-            $query->andWhere('_vr2.' . $sortField . '>=' . (int)$opts['min_views']);
+            $query->andWhere('[[_vr2.' . $sortField . ']] >=' . (int)$opts['min_views']);
         }
         return $query;
     }
@@ -87,7 +87,7 @@ class Facade
     {
         $query->leftJoin(
             '{{%viewswork_viewrecording}} AS _vr2',
-            'elements_sites.elementId=_vr2.elementId AND elements_sites.siteId=_vr2.siteId'
+            '[[elements_sites.elementId]]=[[_vr2.elementId]] AND [[elements_sites.siteId]]=[[_vr2.siteId]]'
         );
         $query->andWhere(Db::parseDateParam('_vr2.dateUpdated', $after, '>='));
         $orderBy = $query->orderBy;
