@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^4.0.0.1",
+        "craftcms/cms": "^3.9.5",
         "jaybizzle/crawler-detect": "^1.2"
     },
     "autoload": {
