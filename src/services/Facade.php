@@ -11,6 +11,7 @@ use craft\base\Element;
 use craft\elements\db\EntryQuery;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Db;
+use RuntimeException;
 use twentyfourhoursmedia\viewswork\behaviors\IncrementableRecordingBehavior;
 use twentyfourhoursmedia\viewswork\helper\SiteIdHelper;
 use twentyfourhoursmedia\viewswork\models\ViewRecording;
@@ -51,30 +52,6 @@ class Facade
         $minViews = (int)$opts['min_views'];
         $query->orderByPopular($by, $minViews);
         return $query;
-
-        $opts+=self::SORT_POPULAR_OPTS;
-        $query->leftJoin(
-            '{{%viewswork_viewrecording}} AS _vr2',
-            '[[elements_sites.elementId]]=[[_vr2.elementId]] AND [[elements_sites.siteId]]=[[_vr2.siteId]]'
-        );
-        $sortFieldMap = [
-            'total' => 'viewsTotal',
-            'month' => 'viewsThisMonth',
-            'week' => 'viewsThisWeek',
-            'day' => 'viewsToday',
-        ];
-        $sortField = $sortFieldMap[$by] ?? null;
-        if (!$sortField) {
-            throw new \RuntimeException("Invalid sort field {$by} for popularity");
-        }
-        $orderBy = $query->orderBy;
-        $query->orderBy('_vr2.' . $sortField . ' DESC');
-        $query->addOrderBy($orderBy);
-        $minViews = (int)$opts['min_views'];
-        if ($minViews > 0) {
-            $query->andWhere('[[_vr2.' . $sortField . ']] >=' . (int)$opts['min_views']);
-        }
-        return $query;
     }
 
     /**
@@ -85,14 +62,8 @@ class Facade
      */
     public function sortRecent(EntryQuery $query, \DateTimeInterface $after) : EntryQuery
     {
-        $query->leftJoin(
-            '{{%viewswork_viewrecording}} AS _vr2',
-            '[[elements_sites.elementId]]=[[_vr2.elementId]] AND [[elements_sites.siteId]]=[[_vr2.siteId]]'
-        );
-        $query->andWhere(Db::parseDateParam('_vr2.dateUpdated', $after, '>='));
-        $orderBy = $query->orderBy;
-        $query->orderBy('_vr2.dateUpdated DESC');
-        $query->addOrderBy($orderBy);
+
+        $query->orderByRecentlyViewed($after);
         return $query;
     }
 }

@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace twentyfourhoursmedia\viewswork\behaviors;
 
-use craft\elements\db\EntryQuery;
-use craft\helpers\Db;
-use yii\base\Behavior;
 use craft\elements\db\ElementQuery;
-use Craft;
+use craft\helpers\Db;
+use DateTime;
+use DateTimeInterface;
+use yii\base\Behavior;
 
 class ViewsWorkElementQueryBehavior extends Behavior
 {
@@ -22,14 +22,15 @@ class ViewsWorkElementQueryBehavior extends Behavior
     public const POPULAR_THIS_WEEK = 'week';
     public const POPULAR_THIS_MONTH = 'month';
 
-    public static function getRecordingTableName() : string {
+    public static function getRecordingTableName(): string
+    {
         return '___vr';
     }
 
     private $orderPopularFirst = self::POPULAR_NONE;
     private $minViews = 1;
     /**
-     * @var \DateTimeInterface | null
+     * @var DateTimeInterface | null
      */
     private $orderByRecentlyViewed = null;
 
@@ -52,9 +53,9 @@ class ViewsWorkElementQueryBehavior extends Behavior
     {
         $criterium = null;
         if (is_string($after)) {
-            $criterium = new \DateTime($criterium);
+            $criterium = new DateTime($after);
         }
-        if ($after instanceof \DateTimeInterface) {
+        if ($after instanceof DateTimeInterface) {
             $criterium = $after;
         }
         $this->orderByRecentlyViewed = $criterium;
@@ -73,10 +74,6 @@ class ViewsWorkElementQueryBehavior extends Behavior
                 $hasVrReference = true;
             }
         }
-
-
-        // exit;
-
 
         if (!$hasVrReference && !$this->orderByRecentlyViewed && $this->orderPopularFirst === self::POPULAR_NONE) {
             return true;
@@ -117,16 +114,20 @@ class ViewsWorkElementQueryBehavior extends Behavior
             $otherQuery->orderBy = null;
         }
 
-        if ($this->orderByRecentlyViewed instanceof \DateTimeInterface) {
+        if ($this->orderByRecentlyViewed instanceof DateTimeInterface) {
             $useQuery = $subQuery;
             $otherQuery = $query;
 
-            $useQuery->andWhere(Db::parseDateParam($tblName . '.dateUpdated', $this->orderByRecentlyViewed, '>='));
+            $useQuery->andWhere(
+                Db::parseDateParam(
+                    $tblName . '.dateUpdated', $this->orderByRecentlyViewed,
+                    '>='
+                )
+            );
             $orderBy = $useQuery->orderBy;
-            $useQuery->orderBy($tblName . '.dateUpdated DESC');
+            $useQuery->orderBy("[[$tblName.dateUpdated]] DESC");
             $useQuery->addOrderBy($orderBy);
             $otherQuery->orderBy = [];
-
         }
 
         return true;
