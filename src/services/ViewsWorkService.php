@@ -53,8 +53,8 @@ class ViewsWorkService extends Component
     {
         $siteId = SiteIdHelper::determineSiteId($element, $site);
         $record = ViewRecording::find()
-            ->andWhere('elementId=:elementId')
-            ->andWhere('siteId=:siteId')
+            ->andWhere('[[elementId]]=:elementId')
+            ->andWhere('[[siteId]]=:siteId')
             ->addParams(['elementId' => (int)$element->id, 'siteId' => $siteId])
             ->one();
         if (!$record) {

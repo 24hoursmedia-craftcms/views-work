@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.3.0] - 2023-10-22
+### Fixed
+- Improve postgresql compatibility (MR#83), thank you @ccchapman
+- Updated node libs required for building assets
+
 ## [2.0.2.0] - 2023-3-25
 ### Fixed
 - Fix Craft ErrorException when no signature is present (MR#94)
