@@ -26,7 +26,11 @@ class ViewsWorkAsset extends AssetBundle
     // =========================================================================
 
     public static function getSourcePath() : string {
-        $isDev = App::env('ENVIRONMENT') === 'dev' || App::env('ENVIRONMENT') === 'development';
+        $isDev =
+            App::env('T4PLUGINDEV_ENVIRONMENT') === 'dev' ||
+            App::env('T4PLUGINDEV_ENVIRONMENT') === 'development'
+        ;
+
         return $isDev ?
             '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build-dev' :
             '@twentyfourhoursmedia/viewswork/assetbundles/viewswork/build';

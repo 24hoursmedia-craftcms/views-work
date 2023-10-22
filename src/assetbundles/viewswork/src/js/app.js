@@ -6,8 +6,7 @@ import './init/rx_refresh';
 
 
 docReady(() => {
-   console.log('views work ready');
-
+   console.log('views work ready.');
 });
 
 execDocReady();
