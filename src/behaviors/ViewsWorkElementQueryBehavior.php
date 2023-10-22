@@ -86,11 +86,11 @@ class ViewsWorkElementQueryBehavior extends Behavior
         $subQuery = $this->owner->subQuery;
         $query->leftJoin(
             '{{%viewswork_viewrecording}} AS ' . $tblName,
-            'elements_sites.elementId=' . $tblName . '.elementId AND elements_sites.siteId=' . $tblName . '.siteId'
+            '[[elements_sites.elementId]]=[[' . $tblName . '.elementId]] AND [[elements_sites.siteId]]=[[' . $tblName . '.siteId]]'
         );
         $subQuery->leftJoin(
             '{{%viewswork_viewrecording}} AS ' . $tblName,
-            'elements_sites.elementId=' . $tblName . '.elementId AND elements_sites.siteId=' . $tblName . '.siteId'
+            '[[elements_sites.elementId]]=[[' . $tblName . '.elementId]] AND [[elements_sites.siteId]]=[[' . $tblName . '.siteId]]'
         );
 
 
@@ -112,7 +112,7 @@ class ViewsWorkElementQueryBehavior extends Behavior
             $useQuery->addOrderBy($orderBy);
             // limit min views
             if ($this->minViews > 0) {
-                $useQuery->andWhere($tblName . '.' . $popularSortField . '>=' . $this->minViews);
+                $useQuery->andWhere('[[' . $tblName . '.' . $popularSortField . ']] >=' . $this->minViews);
             }
             $otherQuery->orderBy = null;
         }
