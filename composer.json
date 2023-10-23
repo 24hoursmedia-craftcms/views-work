@@ -2,7 +2,7 @@
     "name": "twentyfourhoursmedia/views-work",
     "description": "plugin for handling pageviews",
     "type": "craft-plugin",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "keywords": [
         "craft",
         "cms",
@@ -23,7 +23,8 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.9.5",
+        "php": "^8.0.2",
+        "craftcms/cms": "^4.0.0.1",
         "jaybizzle/crawler-detect": "^1.2"
     },
     "autoload": {
