@@ -81,11 +81,11 @@ class ViewsWorkElementQueryBehavior extends Behavior
 
         $query = $this->owner->query;
         $subQuery = $this->owner->subQuery;
-        $query->leftJoin(
+        $query->innerJoin(
             '{{%viewswork_viewrecording}} AS ' . $tblName,
             '[[elements_sites.elementId]]=[[' . $tblName . '.elementId]] AND [[elements_sites.siteId]]=[[' . $tblName . '.siteId]]'
         );
-        $subQuery->leftJoin(
+        $subQuery->innerJoin(
             '{{%viewswork_viewrecording}} AS ' . $tblName,
             '[[elements_sites.elementId]]=[[' . $tblName . '.elementId]] AND [[elements_sites.siteId]]=[[' . $tblName . '.siteId]]'
         );
