@@ -14,11 +14,13 @@ use craft\base\Element;
 use craft\elements\Entry;
 use craft\helpers\UrlHelper;
 use twentyfourhoursmedia\viewswork\ViewsWork;
+use twentyfourhoursmedia\viewswork\helper;
 
 use Craft;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\StringLoaderExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @author    24hoursmedia
@@ -47,6 +49,7 @@ class ViewsWorkTwigExtension extends AbstractExtension
     {
         return [
             new TwigFilter('views_work_image', [$this, 'viewsWorkImage'], ['is_safe' => ['html']]),
+
         ];
     }
 
@@ -56,6 +59,11 @@ class ViewsWorkTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
+            new TwigFunction('getAllSectionsHelper',
+                function(){
+                    return helper\VersionHelper::getAllSectionsHelper();
+                }
+            )
         ];
     }
 

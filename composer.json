@@ -23,8 +23,8 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "craftcms/cms": "^5.0.0-alpha",
+        "php": "^8.0",
+        "craftcms/cms": "^5.0.0-alpha || ^4.0.0.1",
         "jaybizzle/crawler-detect": "^1.2"
     },
     "autoload": {
@@ -42,11 +42,5 @@
             "viewsWorkService": "twentyfourhoursmedia\\viewswork\\services\\ViewsWorkService"
         },
         "class": "twentyfourhoursmedia\\viewswork\\ViewsWork"
-    },
-    "config": {
-        "allow-plugins": {
-            "yiisoft/yii2-composer": false,
-            "craftcms/plugin-installer": false
-        }
     }
 }

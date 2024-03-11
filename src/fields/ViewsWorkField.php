@@ -74,6 +74,14 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
             ]
         );
     }
+    /**
+     * see getPreviewHtml()
+     *
+     * @deprecated
+     */
+    public function getTableAttributeHtml($value, ElementInterface $element): string {
+        return $this.$this->getPreviewHtml($value,$element);
+    }
 
     /**
      * Returns the validation rules for attributes.
