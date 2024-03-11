@@ -3,9 +3,10 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
-## [unreleased]
+
+## [2.2.0] - 2024-03-11
 ### Modified
-- updated for craft 5
+- Add Craft 5 compatibility and Craft 4 backward compatibility
 
 ## [2.1.3] - 2023-11-21
 ### Fixed
