@@ -64,7 +64,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
     // Public Methods
     // =========================================================================
 
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getPreviewHtml(mixed $value, ElementInterface $element): string
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
@@ -73,6 +73,14 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
                 'recording' => $this->getRecord($element),
             ]
         );
+    }
+    /**
+     * see getPreviewHtml()
+     *
+     * @deprecated
+     */
+    public function getTableAttributeHtml($value, ElementInterface $element): string {
+        return $this.$this->getPreviewHtml($value,$element);
     }
 
     /**
@@ -108,7 +116,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
      *
      * @return mixed The prepared field value
      */
-    public function normalizeValue(mixed $value, ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?\craft\base\ElementInterface $element = null): mixed
     {
         if ($element) {
             return $this->getRecord($element);
@@ -117,7 +125,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
         }
     }
 
-    public function getSearchKeywords($value, ElementInterface $element): string
+    public function getSearchKeywords(mixed $value, ElementInterface $element): string
     {
         return '';
     }
@@ -332,7 +340,7 @@ class ViewsWorkField extends Field implements PreviewableFieldInterface
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?\craft\base\ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()->registerAssetBundle(ViewsWorkFieldAsset::class);
