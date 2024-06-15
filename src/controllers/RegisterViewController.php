@@ -25,7 +25,7 @@ class RegisterViewController extends Controller
         // get params and check signature
         $params = ViewsWork::$plugin->registrationUrlService->verifySignedParams($request->getQueryParams());
 
-        $element = Craft::$app->elements->getElementById($params['id']);
+        $element = Craft::$app->elements->getElementById($params['id'], null, '*');
         $service = ViewsWork::$plugin->viewsWorkService;
         $success = $service->recordView($element, $params['sid'], (float)$params['f']);
 
