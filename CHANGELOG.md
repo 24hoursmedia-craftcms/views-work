@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.1] = 2024-06-28
+### Fixed
+- [MR#118](https://github.com/24hoursmedia-craftcms/views-work/pull/118) Support multi site setups on different paths instead of only on different domains 
+
 ## [2.2.0] - 2024-03-11
 ### Modified
 - Add Craft 5 compatibility and Craft 4 backward compatibility
