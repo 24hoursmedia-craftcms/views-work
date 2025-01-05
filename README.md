@@ -1,8 +1,10 @@
 # Views Work plugin for Craft CMS >= 4.x
 
-ABANDONED Unfortunately, we are not able to support this plugin.
+*ABANDONED* Unfortunately, we are not able to support this plugin.
 Feel free to fork this code for your own purposes.
+We changed the license to MIT license jan 5th 2024.
 
+----
 
 Views work 2.x is compatible with Craft CMS version 4.0 or higher.
 
