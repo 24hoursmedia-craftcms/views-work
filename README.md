@@ -1,6 +1,6 @@
 # Views Work plugin for Craft CMS >= 4.x
 
-*ABANDONED* Unfortunately, we are not able to support this plugin.
+*ABANDONED* Unfortunately, we are not able to support this plugin anymore.
 Feel free to fork this code for your own purposes.
 We changed the license to MIT license jan 5th 2024.
 
